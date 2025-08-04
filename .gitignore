@@ -34,3 +34,5 @@ Thumbs.db
 # Logs
 logs/
 *.log
+
+SETUP_COMPLETE.md

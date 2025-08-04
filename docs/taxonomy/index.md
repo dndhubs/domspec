@@ -1,11 +1,11 @@
 ---
 layout: default
-title: DNDHUBS DOMSpec Taxonomy
+title: DNDHUBS DOMSpecs Taxonomy
 ---
 
-# DNDHUBS DOMSpec Taxonomy
+# DNDHUBS DOMSpecs Taxonomy
 
-The DNDHUBS DOMSpec Taxonomy, managed by DNDHUBS LIMITED (`https://dndhubs.com`), provides a comprehensive classification system for web development resources. It's designed to be both exhaustive and extensible, allowing projects to use it as-is or adapt it to their specific needs.
+The DNDHUBS DOMSpecs Taxonomy, managed by DNDHUBS LIMITED (`https://dndhubs.com`), provides a comprehensive classification system for web development resources. It's designed to be both exhaustive and extensible, allowing projects to use it as-is or adapt it to their specific needs.
 
 ## Core Taxonomy
 
@@ -187,7 +187,7 @@ Each taxonomy category aligns with relevant industry standards:
 Use the built-in validation system:
 
 ```typescript
-import { validateTaxonomy } from '@dndhubs/domspecs/taxonomy';
+import { validateTaxonomy } from '@dndhub/domspecs/taxonomy';
 
 const result = validateTaxonomy(myResource);
 if (!result.valid) {
@@ -212,7 +212,7 @@ const oldResource = {
   type: 'button'
 };
 
-// After: DNDHUBS DOMSpec Taxonomy
+// After: DNDHUBS DOMSpecs Taxonomy
 const newResource: ResourceSpec = {
   taxonomy: 'ui',
   type: 'component',
@@ -239,21 +239,21 @@ type TaxonomyV2 = TaxonomyV1 | 'education' | 'entertainment';
 Explore the taxonomy interactively:
 
 ```bash
-npx @dndhubs/domspecs browse-taxonomy
+npx @dndhub/domspecs browse-taxonomy
 ```
 
 ### Code Generation
 Generate TypeScript types from taxonomy:
 
 ```bash
-npx @dndhubs/domspecs generate-types --taxonomy ui --output ./types
+npx @dndhub/domspecs generate-types --taxonomy ui --output ./types
 ```
 
 ### Validation CLI
 Validate your resources:
 
 ```bash
-npx @dndhubs/domspecs validate ./my-resources/**/*.json
+npx @dndhub/domspecs validate ./my-resources/**/*.json
 ```
 
 ## Contributing to the Taxonomy

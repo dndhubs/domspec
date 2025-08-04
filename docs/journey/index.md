@@ -1,11 +1,11 @@
 ---
 layout: default
-title: The DNDHUBS DOMSpec Journey
+title: The DNDHUBS DOMSpecs Journey
 ---
 
-# The DNDHUBS DOMSpec Journey
+# The DNDHUBS DOMSpecs Journey
 
-Follow our journey as we build DNDHUBS DOMSpec, managed by DNDHUBS LIMITED (`https://dndhubs.com`), from concept to reality. This is our story, shared openly with the community.
+Follow our journey as we build DNDHUBS DOMSpecs, managed by DNDHUBS LIMITED (`https://dndhubs.com`), from concept to reality. This is our story, shared openly with the community.
 
 ## Latest Updates
 
@@ -35,7 +35,7 @@ Follow our journey as we build DNDHUBS DOMSpec, managed by DNDHUBS LIMITED (`htt
 
 #### September (Planned)
 - **September 1**: GEOCoLab launch
-- **Mid-September**: DNDHUBS DOMSpec v1.0 release
+- **Mid-September**: DNDHUBS DOMSpecs v1.0 release
 - **Late September**: First community contributions
 
 #### October (Planned)
@@ -58,7 +58,7 @@ Follow our journey as we build DNDHUBS DOMSpec, managed by DNDHUBS LIMITED (`htt
 - Social media campaign
 
 ### 📅 Upcoming
-- npm package publication (`@dndhubs/domspecs`)
+- npm package publication (`@dndhub/domspecs`)
 - Tutorial series
 - Video documentation
 - Conference presentations
@@ -96,7 +96,7 @@ Follow our journey as we build DNDHUBS DOMSpec, managed by DNDHUBS LIMITED (`htt
 
 ## Reflections
 
-Building DNDHUBS DOMSpec is more than creating another library—it's about establishing a standard that will help developers worldwide build better, more consistent web applications. We're committed to:
+Building DNDHUBS DOMSpecs is more than creating another library—it's about establishing a standard that will help developers worldwide build better, more consistent web applications. We're committed to:
 
 - **Transparency**: Sharing our process openly
 - **Community**: Building with, not just for, developers
