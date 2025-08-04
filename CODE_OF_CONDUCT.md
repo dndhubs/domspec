@@ -28,7 +28,7 @@ Community leaders at DNDHUBS LIMITED are responsible for clarifying and enforcin
 
 ## Scope
 
-This Code of Conduct applies within all community spaces, including `https://github.com/dndhubs/domspecs`, and also applies when an individual is officially representing the DNDHUBS DOMSpec community in public spaces.
+This Code of Conduct applies within all community spaces, including `https://github.com/dndhubs/domspec`, and also applies when an individual is officially representing the DNDHUBS DOMSpec community in public spaces.
 
 ## Enforcement
 

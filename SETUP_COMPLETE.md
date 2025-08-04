@@ -12,9 +12,9 @@ Your DNDHUBS DOMSpec repository has been initialized successfully, managed by DN
 2. **Push to GitHub**
    ```bash
    git add .
-   git commit -m "Initial commit: DNDHUBS DOMSpec repository"
+   git commit -m "docs: Documentation changes"
    git branch -M main
-   git remote add origin https://github.com/dndhubs/domspecs.git
+   git remote add origin https://github.com/dndhubs/domspec.git
    git push -u origin main
    ```
 
@@ -36,9 +36,9 @@ Your DNDHUBS DOMSpec repository has been initialized successfully, managed by DN
    - Share in developer forums
 
 ## Important URLs:
-- Repository: https://github.com/dndhubs/domspecs
-- Documentation: https://dndhubs.com/docs/domspecs
-- Discussions: https://github.com/dndhubs/domspecs/discussions
+- Repository: https://github.com/dndhubs/domspec
+- Documentation: https://dndhubs.com/docs/domspec
+- Discussions: https://github.com/dndhubs/domspec/discussions
 - Website: https://dndhubs.com
 
 Good luck with your launch! 🚀

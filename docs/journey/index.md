@@ -1,11 +1,11 @@
 ---
 layout: default
-title: The DNDHUBS DOMSpecs Journey
+title: The DNDHUBS DOMSpec Journey
 ---
 
-# The DNDHUBS DOMSpecs Journey
+# The DNDHUBS DOMSpec Journey
 
-Follow our journey as we build DNDHUBS DOMSpecs, managed by DNDHUBS LIMITED (`https://dndhubs.com`), from concept to reality. This is our story, shared openly with the community.
+Follow our journey as we build DNDHUBS DOMSpec, managed by DNDHUBS LIMITED (`https://dndhubs.com`), from concept to reality. This is our story, shared openly with the community.
 
 ## Latest Updates
 
@@ -35,7 +35,7 @@ Follow our journey as we build DNDHUBS DOMSpecs, managed by DNDHUBS LIMITED (`ht
 
 #### September (Planned)
 - **September 1**: GEOCoLab launch
-- **Mid-September**: DNDHUBS DOMSpecs v1.0 release
+- **Mid-September**: DNDHUBS DOMSpec v1.0 release
 - **Late September**: First community contributions
 
 #### October (Planned)
@@ -47,7 +47,7 @@ Follow our journey as we build DNDHUBS DOMSpecs, managed by DNDHUBS LIMITED (`ht
 
 ### ✅ Completed
 - Domain registration (`https://dndhubs.com`)
-- GitHub organization setup (`https://github.com/dndhubs/domspecs`)
+- GitHub organization setup (`https://github.com/dndhubs/domspec`)
 - Initial taxonomy design
 - Documentation framework
 
@@ -58,7 +58,7 @@ Follow our journey as we build DNDHUBS DOMSpecs, managed by DNDHUBS LIMITED (`ht
 - Social media campaign
 
 ### 📅 Upcoming
-- npm package publication (`@dndhub/domspecs`)
+- npm package publication (`@dndhub/domspec`)
 - Tutorial series
 - Video documentation
 - Conference presentations
@@ -82,21 +82,21 @@ Follow our journey as we build DNDHUBS DOMSpecs, managed by DNDHUBS LIMITED (`ht
 ## Get Involved
 
 ### How You Can Help
-1. **Star the repository**: Show your support at `https://github.com/dndhubs/domspecs`
-2. **Share your ideas**: Open discussions at `https://github.com/dndhubs/domspecs/discussions`
+1. **Star the repository**: Show your support at `https://github.com/dndhubs/domspec`
+2. **Share your ideas**: Open discussions at `https://github.com/dndhubs/domspec/discussions`
 3. **Contribute code**: Submit PRs
 4. **Write documentation**: Help others learn
 5. **Spread the word**: Share on social media
 
 ### Follow Our Progress
-- [GitHub](https://github.com/dndhubs/domspecs)
+- [GitHub](https://github.com/dndhubs/domspec)
 - [Twitter/X](https://x.com/dndhubs)
 - [LinkedIn](https://linkedin.com/company/dndhubs)
 - [Website](https://dndhubs.com)
 
 ## Reflections
 
-Building DNDHUBS DOMSpecs is more than creating another library—it's about establishing a standard that will help developers worldwide build better, more consistent web applications. We're committed to:
+Building DNDHUBS DOMSpec is more than creating another library—it's about establishing a standard that will help developers worldwide build better, more consistent web applications. We're committed to:
 
 - **Transparency**: Sharing our process openly
 - **Community**: Building with, not just for, developers

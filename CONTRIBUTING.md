@@ -10,11 +10,11 @@ This project and everyone participating in it is governed by the [DNDHUBS DOMSpe
 
 ### 🐛 Reporting Bugs
 
-Before creating bug reports, please check existing issues at `https://github.com/dndhubs/domspecs/issues`. When creating a bug report, include as many details as possible using our issue template.
+Before creating bug reports, please check existing issues at `https://github.com/dndhubs/domspec/issues`. When creating a bug report, include as many details as possible using our issue template.
 
 ### 💡 Suggesting Enhancements
 
-Enhancement suggestions are tracked as GitHub issues at `https://github.com/dndhubs/domspecs/issues`. When creating an enhancement suggestion, include:
+Enhancement suggestions are tracked as GitHub issues at `https://github.com/dndhubs/domspec/issues`. When creating an enhancement suggestion, include:
 - A clear and descriptive title
 - A detailed description of the proposed enhancement
 - Examples of how it would be used
@@ -22,7 +22,7 @@ Enhancement suggestions are tracked as GitHub issues at `https://github.com/dndh
 
 ### 🔧 Pull Requests
 
-1. Fork the repo at `https://github.com/dndhubs/domspecs` and create your branch from `main`.
+1. Fork the repo at `https://github.com/dndhubs/domspec` and create your branch from `main`.
 2. If you've added code, add tests.
 3. Ensure the test suite passes.
 4. Make sure your code lints.
@@ -32,8 +32,8 @@ Enhancement suggestions are tracked as GitHub issues at `https://github.com/dndh
 
 ```bash
 # Clone your fork
-git clone https://github.com/dndhubs/domspecs.git
-cd domspecs
+git clone https://github.com/dndhubs/domspec.git
+cd domspec
 
 # Install dependencies
 npm install
@@ -65,9 +65,9 @@ type CoreNewCategory = 'education' | 'entertainment';
 type CustomNewCategory = string & { __newCategory?: 'CustomNewCategory' };
 
 /**
- * @see https://github.com/dndhubs/domspecs/blob/main/src/taxonomy/new-category-taxonomy.ts
- * @see https://github.com/dndhubs/domspecs/wiki/NewCategoryTaxonomy
- * @see https://github.com/dndhubs/domspecs/discussions/new?category=general&title=Feedback%20on%20NewCategoryTaxonomy
+ * @see https://github.com/dndhubs/domspec/blob/main/src/taxonomy/new-category-taxonomy.ts
+ * @see https://github.com/dndhubs/domspec/wiki/NewCategoryTaxonomy
+ * @see https://github.com/dndhubs/domspec/discussions/new?category=general&title=Feedback%20on%20NewCategoryTaxonomy
  * - 'education': Educational resources and learning materials
  * - 'entertainment': Media and entertainment content
  */
@@ -99,16 +99,16 @@ feat: add healthcare taxonomy category
 - Use Markdown for all documentation.
 - Include code examples where applicable.
 - Keep language clear and concise.
-- Add navigation links between related topics in the wiki (`https://github.com/dndhubs/domspecs/wiki`).
+- Add navigation links between related topics in the wiki (`https://github.com/dndhubs/domspec/wiki`).
 
 ## Questions?
-Feel free to open an issue with the question label or start a discussion at `https://github.com/dndhubs/domspecs/discussions`.
+Feel free to open an issue with the question label or start a discussion at `https://github.com/dndhubs/domspec/discussions`.
 
 ## Recognition
 Contributors will be recognized in:
 
-- The project README (`https://github.com/dndhubs/domspecs/blob/main/README.md`)
+- The project README (`https://github.com/dndhubs/domspec/blob/main/README.md`)
 - Release notes
-- Our documentation site (`https://dndhubs.com/docs/domspecs`)
+- Our documentation site (`https://dndhubs.com/docs/domspec`)
 
 Thank you for contributing to DNDHUBS DOMSpec, managed by DNDHUBS LIMITED! 🚀

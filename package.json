@@ -1,5 +1,5 @@
 {
-  "name": "@dndhub/domspecs",
+  "name": "@dndhub/domspec",
   "version": "0.0.0-alpha",
   "description": "DNDHUBS DOMSpec - TypeScript type definitions and classifications for DOM APIs and web development",
   "homepage": "https://dndhubs.com/docs/domspecs",

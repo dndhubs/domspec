@@ -28,7 +28,7 @@ DNDHUBS DOMSpec (Document Object Model Specifications), managed by DNDHUBS LIMIT
 
 ```typescript
 // DNDHUBS DOMSpec Taxonomy in action
-import { ResourceTaxonomy, ResourceSpec } from '@dndhubs/domspecs';
+import { ResourceTaxonomy, ResourceSpec } from '@dndhubs/domspec';
 
 type ResourceTaxonomy = CoreResource | CustomResource;
 type CoreResource = 'ui' | 'content' | 'geospatial' | 'financial' | 'healthcare';
@@ -47,25 +47,25 @@ const userInterface: ResourceSpec = {
 
 ## Get Started
 <div class="cta-buttons">
-  <a href="/docs/domspecs/getting-started" class="btn btn-primary">Get Started →</a>
-  <a href="https://github.com/dndhubs/domspecs" class="btn btn-secondary">View on GitHub</a>
+  <a href="/docs/domspec/getting-started" class="btn btn-primary">Get Started →</a>
+  <a href="https://github.com/dndhubs/domspec" class="btn btn-secondary">View on GitHub</a>
 </div>
 
 ## Join the Community
-- 💬 [GitHub Discussions](https://github.com/dndhubs/domspecs/discussions)
+- 💬 [GitHub Discussions](https://github.com/dndhubs/domspec/discussions)
 - 🐦 [Twitter/X](https://twitter.com/dndhubs)
 - 💼 [LinkedIn](https://linkedin.com/company/dndhubs)
 - 🌐 [Website](https://dndhubs.com)
 
 ## Latest Updates
 ### 🎉 Launch Announcement - August 2025
-We're excited to announce the official launch of DNDHUBS DOMSpec v1.0! Read more in our [launch journey post](/docs/domspecs/journey/2025-08-01-launch).
+We're excited to announce the official launch of DNDHUBS DOMSpec v1.0! Read more in our [launch journey post](/docs/domspec/journey/2025-08-01-launch).
 
 ### 📚 Documentation Released
-Complete documentation for the DNDHUBS DOMSpec taxonomy is now available. [Explore the taxonomy](/docs/domspecs/taxonomy).
+Complete documentation for the DNDHUBS DOMSpec taxonomy is now available. [Explore the taxonomy](/docs/domspec/taxonomy).
 
 ### 🤝 Contributing
-We're looking for contributors! Check out our [contributing guide](https://github.com/dndhubs/domspecs/blob/main/CONTRIBUTING.md) to get involved.
+We're looking for contributors! Check out our [contributing guide](https://github.com/dndhubs/domspec/blob/main/CONTRIBUTING.md) to get involved.
 
 <p align="center">
   <em>DNDHUBS DOMSpec is part of the broader ecosystem including <a href="https://trakfox.com">Trakfox</a>, <a href="https://dataorb.co">DataOrb</a>, and <a href="https://geocolab.com">GEOCoLab</a></em>

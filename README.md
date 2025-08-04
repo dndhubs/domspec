@@ -1,14 +1,14 @@
 # Welcome to DNDHUBS DOMSpec 🎉
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
-[![GitHub Pages](https://img.shields.io/badge/docs-GitHub%20Pages-blue)](https://dndhubs.com/docs/domspecs)
+[![GitHub Pages](https://img.shields.io/badge/docs-GitHub%20Pages-blue)](https://dndhubs.com/docs/domspec)
 [![Contributions Welcome](https://img.shields.io/badge/contributions-welcome-brightgreen.svg?style=flat)](CONTRIBUTING.md)
 
 > **DNDHUBS DOMSpec**: Document Object Model Specifications - An open-source initiative by DNDHUBS LIMITED for standardizing DOM APIs and web development taxonomy.
 
 ## 🚀 Quick Start
 
-Visit our [documentation](https://dndhubs.com/docs/domspecs) to get started with DNDHUBS DOMSpec.
+Visit our [documentation](https://dndhubs.com/docs/domspec) to get started with DNDHUBS DOMSpec.
 
 ```typescript
 // DNDHUBS DOMSpec Taxonomy Example
@@ -44,14 +44,14 @@ Ways to Contribute:
 
 📖 Documentation
 
-- [Getting Started](https://github.com/dndhubs/domspecs/wiki/Getting-Started)
-- [Taxonomy Guide](https://github.com/dndhubs/domspecs/wiki/Taxonomy)
-- [Development Journey](https://github.com/dndhubs/domspecs/wiki/Development-Journey)
-- [API Reference](https://github.com/dndhubs/domspecs/wiki/API-Reference)
+- [Getting Started](https://github.com/dndhubs/domspec/wiki/Getting-Started)
+- [Taxonomy Guide](https://github.com/dndhubs/domspec/wiki/Taxonomy)
+- [Development Journey](https://github.com/dndhubs/domspec/wiki/Development-Journey)
+- [API Reference](https://github.com/dndhubs/domspec/wiki/API-Reference)
 
 🏆 Community
 
-- GitHub Discussions: Join the conversation at `https://github.com/dndhubs/domspecs/discussions`
+- GitHub Discussions: Join the conversation at `https://github.com/dndhubs/domspec/discussions`
 - Twitter/X: Follow [@dndhubs](https://x.com/dndhubs) for updates
 - LinkedIn: DNDHUBS LIMITED Updates (`https://dndhubs.com`)
 

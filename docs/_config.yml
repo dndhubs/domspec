@@ -2,9 +2,9 @@
 
 title: DNDHUBS DOMSpec Documentation
 description: Open-source DOM specifications and taxonomy for modern web development, managed by DNDHUBS LIMITED
-baseurl: "/docs/domspecs"
+baseurl: "/docs/domspec"
 url: "https://dndhubs.com"
-repository: dndhubs/domspecs
+repository: dndhubs/domspec
 
 # Theme settings
 theme: jekyll-theme-minimal
@@ -60,14 +60,14 @@ google_analytics:
 # Navigation
 navigation:
   - title: Home
-    url: /docs/domspecs
+    url: /docs/domspec
   - title: Getting Started
-    url: /docs/domspecs/getting-started
+    url: /docs/domspec/getting-started
   - title: Taxonomy
-    url: /docs/domspecs/taxonomy
+    url: /docs/domspec/taxonomy
   - title: Journey
-    url: /docs/domspecs/journey
+    url: /docs/domspec/journey
   - title: GitHub
-    url: https://github.com/dndhubs/domspecs
+    url: https://github.com/dndhubs/domspec
   - title: Wiki
-    url: https://github.com/dndhubs/domspecs/wiki
+    url: https://github.com/dndhubs/domspec/wiki

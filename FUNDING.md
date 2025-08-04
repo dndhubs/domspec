@@ -1,6 +1,6 @@
-# Funding the @dndhubs/domspecs Project
+# Funding the @dndhubs/domspec Project
 
-The `@dndhubs/domspecs` repository is an open-source project by DNDHUBS LIMITED, dedicated to creating a global standard for DOM API and web development taxonomy classification within the DNDHUBS ecosystem. To sustain and expand this initiative, we rely on the generosity of our community through sponsorships and donations. Your contributions help fund new taxonomy domains, tooling improvements, and community engagement, ensuring the project remains robust, accessible, and aligned with industry needs.
+The `@dndhubs/domspec` repository is an open-source project by DNDHUBS LIMITED, dedicated to creating a global standard for DOM API and web development taxonomy classification within the DNDHUBS ecosystem. To sustain and expand this initiative, we rely on the generosity of our community through sponsorships and donations. Your contributions help fund new taxonomy domains, tooling improvements, and community engagement, ensuring the project remains robust, accessible, and aligned with industry needs.
 
 ## How to Contribute
 We offer two primary platforms for supporting the project:
@@ -24,7 +24,7 @@ Donations are allocated to the following key areas:
 ## Get Involved
 Beyond financial contributions, you can support the project by:
 - Contributing taxonomies, schemas, or documentation (see [CONTRIBUTING.md](CONTRIBUTING.md)).
-- Participating in discussions on [GitHub Discussions](https://github.com/dndhubs/domspecs/discussions).
+- Participating in discussions on [GitHub Discussions](https://github.com/dndhubs/domspec/discussions).
 - Sharing the project with your network to grow our community.
 
-Thank you for supporting `@dndhubs/domspecs` and helping us build a global standard for taxonomy classification, managed by DNDHUBS LIMITED (`https://dndhubs.com`)!
+Thank you for supporting `@dndhubs/domspec` and helping us build a global standard for taxonomy classification, managed by DNDHUBS LIMITED (`https://dndhubs.com`)!
