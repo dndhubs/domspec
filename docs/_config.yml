@@ -1,0 +1,73 @@
+# Jekyll configuration for DNDHUBS DOMSpec documentation
+
+title: DNDHUBS DOMSpec Documentation
+description: Open-source DOM specifications and taxonomy for modern web development, managed by DNDHUBS LIMITED
+baseurl: "/docs/domspecs"
+url: "https://dndhubs.com"
+repository: dndhubs/domspecs
+
+# Theme settings
+theme: jekyll-theme-minimal
+plugins:
+  - jekyll-feed
+  - jekyll-sitemap
+  - jekyll-seo-tag
+  - jemoji
+
+# Collections
+collections:
+  journey:
+    output: true
+    permalink: /journey/:name
+  taxonomy:
+    output: true
+    permalink: /taxonomy/:name
+
+# Defaults
+defaults:
+  - scope:
+      path: ""
+      type: "pages"
+    values:
+      layout: "default"
+  - scope:
+      path: ""
+      type: "journey"
+    values:
+      layout: "post"
+
+# Exclude from build
+exclude:
+  - Gemfile
+  - Gemfile.lock
+  - node_modules
+  - vendor
+
+# Markdown settings
+markdown: kramdown
+kramdown:
+  input: GFM
+  syntax_highlighter: rouge
+
+# Social
+twitter:
+  username: dndhubs
+  card: summary
+
+# Analytics (add your tracking ID when ready)
+google_analytics: 
+
+# Navigation
+navigation:
+  - title: Home
+    url: /docs/domspecs
+  - title: Getting Started
+    url: /docs/domspecs/getting-started
+  - title: Taxonomy
+    url: /docs/domspecs/taxonomy
+  - title: Journey
+    url: /docs/domspecs/journey
+  - title: GitHub
+    url: https://github.com/dndhubs/domspecs
+  - title: Wiki
+    url: https://github.com/dndhubs/domspecs/wiki

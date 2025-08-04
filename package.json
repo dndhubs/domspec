@@ -1,0 +1,42 @@
+{
+  "name": "@dndhub/domspecs",
+  "version": "0.0.0-alpha",
+  "description": "DNDHUBS DOMSpec - TypeScript type definitions and classifications for DOM APIs and web development",
+  "homepage": "https://dndhubs.com/docs/domspecs",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/dndhubs/domspecs.git"
+  },
+  "keywords": [
+    "domspec",
+    "dom",
+    "taxonomy",
+    "web-standards",
+    "typescript"
+  ],
+  "author": "DNDHUBS LIMITED <jetroolowole@dndhubs.com> (https://dndhubs.com)",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/dndhubs/domspecs/issues"
+  },
+  "scripts": {
+    "build": "tsc",
+    "build:docs": "bundle exec jekyll build",
+    "serve:docs": "bundle exec jekyll serve",
+    "test": "echo 'No tests yet'",
+    "lint": "eslint . --ext .ts,.tsx",
+    "format": "prettier --write \"**/*.{ts,tsx,md,json}\""
+  },
+  "devDependencies": {
+    "@types/node": "^20.0.0",
+    "eslint": "^8.57.0",
+    "prettier": "^3.2.5",
+    "typescript": "^5.8.3"
+  },
+  "files": [
+    "dist"
+  ],
+  "publishConfig": {
+    "access": "public"
+  }
+}

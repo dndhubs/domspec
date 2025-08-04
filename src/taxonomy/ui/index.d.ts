@@ -1,0 +1,43 @@
+export { HeaderBehaviorTaxonomy } from './common/headerBehavior.d.ts';
+export { NavigationStyleTaxonomy } from './common/navigationStyle.d.ts';
+export { ModalBackdropTaxonomy } from './common/modalBackdrop.d.ts';
+export { NotificationSeverityTaxonomy } from './common/notificationSeverity.d.ts';
+export { TooltipTriggerTaxonomy } from './common/tooltipTrigger.d.ts';
+export { ContentLayoutTaxonomy } from './common/contentLayout.d.ts';
+export { SectionTypeTaxonomy } from './common/sectionType.d.ts';
+export { FormValidationTaxonomy } from './common/formValidation.d.ts';
+export { FormLayoutTaxonomy } from './common/formLayout.d.ts';
+export { MediaControlsTaxonomy } from './common/mediaControls.d.ts';
+export { MediaAutoplayTaxonomy } from './common/mediaAutoplay.d.ts';
+export { DashboardLayoutTaxonomy } from './common/dashboardLayout.d.ts';
+export { DataRefreshTaxonomy } from './common/dataRefresh.d.ts';
+export { AdFormatTaxonomy } from './common/adFormat.d.ts';
+export { AdLoadStrategyTaxonomy } from './common/adLoadStrategy.d.ts';
+export { A11yPriorityTaxonomy } from './common/a11yPriority.d.ts';
+export { A11yModeTaxonomy } from './common/a11yMode.d.ts';
+export { CollaborationModeTaxonomy } from './common/collaborationMode.d.ts';
+export { PresenceStatusTaxonomy } from './common/presenceStatus.d.ts';
+export { ErrorSeverityTaxonomy } from './common/errorSeverity.d.ts';
+export { OnboardingStepTaxonomy } from './common/onboardingStep.d.ts';
+export { SocialShareTaxonomy } from './common/socialShare.d.ts';
+
+export { PortalSizeTaxonomy } from './portal/size.d.ts';
+export { PortalVariantTaxonomy } from './portal/variant.d.ts';
+export { PortalPositionTaxonomy } from './portal/position.d.ts';
+export { PortalElevationTaxonomy } from './portal/elevation.d.ts';
+export { PortalSpacingTaxonomy } from './portal/spacing.d.ts';
+export { PortalAnimationTaxonomy } from './portal/animation.d.ts';
+export { PortalBreakpointTaxonomy } from './portal/breakpoint.d.ts';
+export { PortalAlignmentTaxonomy } from './portal/alignment.d.ts';
+export { PortalTransitionTaxonomy } from './portal/transition.d.ts';
+export { PortalKeyTaxonomy } from './portal/key.d.ts';
+export { PortalColorTaxonomy } from './portal/color.d.ts';
+
+export { 
+    ActionVerb, CRUDActionVerb, AuthActionVerb, ComputeActionVerb,
+    AnalyticsActionVerb, EngageActionVerb, FeedbackActionVerb, ChurnActionVerb, 
+    SuspectActionVerb, ExploreActionVerb, LeadActionVerb, ProspectActionVerb, 
+    CustomerActionVerb, SupporterActionVerb, AdvocateActionVerb, 
+    OperationActionVerb, SentimentActionVerb, WorkflowActionVerb, 
+    MutableActionVerb, QuotableActionVerb, SubscribableActionVerb 
+} from './verb.d.ts';
