@@ -52,9 +52,9 @@
  *   Variations and Use Cases: Low-latency; errors in global distribution.
  *   Example Usage: Edge errors in Cloudflare Workers.
  *
- * - 'virtual-machine': Virtual machine deployment.
+ * - 'vm': Virtual machine deployment.
  *   Classifications: VMWare/EC2 standards.
- *   Identifiers: lowercase: 'virtual-machine', camelCase: 'vmDeployment', snake_case: 'vm_deployment', ALL_CAP: 'VIRTUAL_MACHINE', cache key: 'deploy:virtual-machine:errId'.
+ *   Identifiers: lowercase: 'vm', camelCase: 'vmDeployment', snake_case: 'vm_deployment', ALL_CAP: 'VIRTUAL_MACHINE', cache key: 'deploy:vm:errId'.
  *   Model Identifier Format: 'deploy-vm-{timestamp}'.
  *   Variations and Use Cases: Isolated VMs; errors in virtualization layers.
  *   Example Usage: VM errors in AWS EC2 instances.
@@ -81,5 +81,5 @@
  *   Example Usage: IaaS errors in cloud VM management.
  */
 export type DeploymentEnvironmentTaxonomy = CoreDeploymentEnvironment | CustomDeploymentEnvironment;
-export type CoreDeploymentEnvironment = 'localhost' | 'cloud' | 'onpremise' | 'container' | 'hybrid' | 'serverless' | 'edge' | 'virtual-machine' | 'bare-metal' | 'paas' | 'iaas';
+export type CoreDeploymentEnvironment = 'localhost' | 'cloud' | 'onpremise' | 'container' | 'hybrid' | 'serverless' | 'edge' | 'vm' | 'bare-metal' | 'paas' | 'iaas';
 export type CustomDeploymentEnvironment = string & { __deploymentEnvironment?: 'CustomDeploymentEnvironment' };

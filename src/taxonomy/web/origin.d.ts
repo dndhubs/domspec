@@ -179,6 +179,6 @@
  *   Variations and Use Cases: Cassandra native transport port; used in fluxr for distributed data storage. Tracks cluster connection errors.
  *   Example Usage: Cassandra errors in fluxr wide-column integrations.
  */
-export type OriginTaxonomy = CoreOrigin | CustomOrigin;
+export type UrlOriginTaxonomy = CoreOrigin | CustomOrigin;
 export type CoreOrigin = 'https://api.example.com' | 'http://localhost' | 'http://localhost:3000' | 'http://127.0.0.1:8080' | 'https://production.trakfox.com' | 'https://staging.trakfox.com' | 'https://dev.trakfox.com' | 'file://' | 'null' | 'http://localhost:5173' | 'http://localhost:4200' | 'http://localhost:8000' | 'http://127.0.0.1:3000' | 'http://[::1]:3000' | 'mysql://localhost:3306' | 'postgresql://localhost:5432' | 'mongodb://localhost:27017' | 'redis://localhost:6379' | 'neo4j://localhost:7687' | 'http://localhost:8086' | 'http://localhost:9200' | 'amqp://localhost:5672' | 'kafka://localhost:9092' | 'http://localhost:5984' | 'cqlsh://localhost:9042';
 export type CustomOrigin = string & { __origin?: 'CustomOrigin' };

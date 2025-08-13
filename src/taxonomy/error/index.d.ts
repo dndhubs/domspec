@@ -1,5 +1,5 @@
 export {ErrorCategoryTaxonomy, CoreErrorCategory, CustomErrorCategory} from './category.d.ts';
-export {ErrorColorTaxonomy, CoreErrorColor, CustomErrorColor} from './error-color.d.ts';
+export {ErrorColorSemanticTaxonomy} from './error-color.d.ts';
 export {ErrorFeatureTaxonomy, CoreErrorFeature, CustomErrorFeature} from './error-feature.d.ts';
 export {ErrorStatusTaxonomy, CoreErrorStatus, CustomErrorStatus} from './error-status.d.ts';
 export {ErrorTestTypeTaxonomy, CoreErrorTestType, CustomErrorTestType} from './error-test-type.d.ts';

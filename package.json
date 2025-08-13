@@ -7,6 +7,17 @@
     "type": "git",
     "url": "git+https://github.com/dndhubs/domspecs.git"
   },
+  "type": "module",
+  "types": "./src/index.d.ts",
+  "exports": {
+    "./package.json": "./package.json",
+    ".": {
+      "types": "./src/index.d.ts",
+      "import": "./dist/index.mjs",
+      "require": "./dist/index.js",
+      "default": "./dist/index.js"
+    }
+  },
   "keywords": [
     "domspec",
     "dom",

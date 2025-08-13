@@ -31,13 +31,6 @@ export { PortalBreakpointTaxonomy } from './portal/breakpoint.d.ts';
 export { PortalAlignmentTaxonomy } from './portal/alignment.d.ts';
 export { PortalTransitionTaxonomy } from './portal/transition.d.ts';
 export { PortalKeyTaxonomy } from './portal/key.d.ts';
-export { PortalColorTaxonomy } from './portal/color.d.ts';
+export { PortalColorTaxonomy, CorePortalColorTaxonomy, CustomPortalColor } from './portal/color.d.ts';
 
-export { 
-    ActionVerb, CRUDActionVerb, AuthActionVerb, ComputeActionVerb,
-    AnalyticsActionVerb, EngageActionVerb, FeedbackActionVerb, ChurnActionVerb, 
-    SuspectActionVerb, ExploreActionVerb, LeadActionVerb, ProspectActionVerb, 
-    CustomerActionVerb, SupporterActionVerb, AdvocateActionVerb, 
-    OperationActionVerb, SentimentActionVerb, WorkflowActionVerb, 
-    MutableActionVerb, QuotableActionVerb, SubscribableActionVerb 
-} from './verb.d.ts';
+export { ColorNameTaxonomy, CoreColorNameTaxonomy, CustomColorName } from './color/name.js';

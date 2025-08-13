@@ -65,9 +65,9 @@ type ArraySliceByPositiveIndex<
     
 /**
  * Returns an array slice of a given range, like Array#slice().
- * @see https://github.com/dndhubs/domspecs/blob/main/src/utility/array-iterable/array-slice.d.ts
- * @see https://github.com/dndhubs/domspecs/wiki/Utility
- * @see https://github.com/dndhubs/domspecs/discussions/new?category=feedback&title=Feedback%20on%20ArraySlice
+ * @see https://github.com/dndhubs/domspec/blob/main/src/utility/array-iterable/array-slice.d.ts
+ * @see https://github.com/dndhubs/domspec/wiki/Utility
+ * @see https://github.com/dndhubs/domspec/discussions/new?category=feedback&title=Feedback%20on%20ArraySlice
  * @remarks
  * Provides type-safe slicing for arrays in DNDHUBS components and APIs, for Trakfox and HealthOrb DHIS2.
  * @template Array_ - The array to slice.

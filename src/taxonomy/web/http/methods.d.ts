@@ -185,6 +185,4 @@
  *   Variations and Use Cases: Used for querying resources (e.g., SEARCH /files?q=doc). Errors include 400 Bad Request for invalid queries.
  *   Example Usage: WebDAV search errors in fluxr SearchDriver integrations.
  */
-export type HttpMethodTaxonomy = CoreHttpMethod | CustomHttpMethod;
-export type CoreHttpMethod = 'GET' | 'POST' | 'PUT' | 'DELETE' | 'PATCH' | 'HEAD' | 'OPTIONS' | 'TRACE' | 'CONNECT' | 'COPY' | 'LOCK' | 'MKCOL' | 'MOVE' | 'PURGE' | 'PROPFIND' | 'PROPPATCH' | 'UNLOCK' | 'REPORT' | 'MKACTIVITY' | 'CHECKOUT' | 'MERGE' | 'MSEARCH' | 'NOTIFY' | 'SUBSCRIBE' | 'UNSUBSCRIBE' | 'SEARCH';
-export type CustomHttpMethod = string & { __method?: 'CustomHttpMethod' };
+export type HttpMethodTaxonomy = 'GET' | 'POST' | 'PUT' | 'DELETE' | 'PATCH' | 'HEAD' | 'OPTIONS' | 'TRACE' | 'CONNECT' | 'COPY' | 'LOCK' | 'MKCOL' | 'MOVE' | 'PURGE' | 'PROPFIND' | 'PROPPATCH' | 'UNLOCK' | 'REPORT' | 'MKACTIVITY' | 'CHECKOUT' | 'MERGE' | 'MSEARCH' | 'NOTIFY' | 'SUBSCRIBE' | 'UNSUBSCRIBE' | 'SEARCH';
