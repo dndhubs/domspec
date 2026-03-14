@@ -1,0 +1,1 @@
+export {RouterTypeTaxonomy} from './router-type.d.ts';

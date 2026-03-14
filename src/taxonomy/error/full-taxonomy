@@ -1,0 +1,1759 @@
+/**
+ * Union type representing ErrorSeverityTaxonomy in the DOMSpec ecosystem.
+ * Defines severity levels for errors in @dndhub/error, aligned with logging and UI rendering needs.
+ *
+ * - 'critical': Indicates system-wide failure requiring immediate action.
+ *   Classifications: ISO 20000 (IT Service Management).
+ *   Identifiers: lowercase: 'critical', camelCase: 'criticalError', snake_case: 'critical_error', ALL_CAP: 'CRITICAL', cache key: 'severity:critical:errId'.
+ *   Model Identifier Format: 'critical-error-{timestamp}'.
+ *   Variations and Use Cases: Used in production alerts; triggers immediate Slack notifications.
+ *   Example Usage: ErrorBoundary.tsx rendering critical errors with red UI (#FF0000).
+ *
+ * - 'fatal': Unrecoverable error causing system crash.
+ *   Classifications: Aligns with LogLevel.Fatal.
+ *   Identifiers: lowercase: 'fatal', camelCase: 'fatalError', snake_case: 'fatal_error', ALL_CAP: 'FATAL', cache key: 'severity:fatal:errId'.
+ *   Model Identifier Format: 'fatal-error-{timestamp}'.
+ *   Variations and Use Cases: Used in server logs; triggers Vercel KV storage.
+ *   Example Usage: DomsError.ts logging fatal errors to server.
+ *
+ * - 'error': Standard error requiring developer attention.
+ *   Identifiers: lowercase: 'error', camelCase: 'standardError', snake_case: 'standard_error', ALL_CAP: 'ERROR', cache key: 'severity:error:errId'.
+ *   Model Identifier Format: 'error-{timestamp}'.
+ *   Example Usage: DomsClientError.tsx rendering user-facing error messages.
+ *
+ * - 'warn': Potential issue that may escalate if unaddressed.
+ *   Identifiers: lowercase: 'warn', camelCase: 'warningError', snake_case: 'warning_error', ALL_CAP: 'WARN', cache key: 'severity:warn:errId'.
+ *   Model Identifier Format: 'warn-error-{timestamp}'.
+ *   Example Usage: Console warnings in development mode.
+ *
+ * - 'info': Informational message, no action required.
+ *   Identifiers: lowercase: 'info', camelCase: 'infoMessage', snake_case: 'info_message', ALL_CAP: 'INFO', cache key: 'severity:info:errId'.
+ *   Model Identifier Format: 'info-error-{timestamp}'.
+ *   Example Usage: Logging successful operations in DomsError.ts.
+ *
+ * - 'debug': Developer-focused debug information.
+ *   Identifiers: lowercase: 'debug', camelCase: 'debugMessage', snake_case: 'debug_message', ALL_CAP: 'DEBUG', cache key: 'severity:debug:errId'.
+ *   Model Identifier Format: 'debug-error-{timestamp}'.
+ *   Example Usage: Detailed logs in development environment.
+ *
+ * - 'expired': Error due to expired resources or sessions.
+ *   Identifiers: lowercase: 'expired', camelCase: 'expiredError', snake_case: 'expired_error', ALL_CAP: 'EXPIRED', cache key: 'severity:expired:errId'.
+ *   Model Identifier Format: 'expired-error-{timestamp}'.
+ *   Example Usage: Session timeout errors in authentication flows.
+ *
+ * - 'update': Indicates need for system or dependency update.
+ *   Identifiers: lowercase: 'update', camelCase: 'updateRequired', snake_case: 'update_required', ALL_CAP: 'UPDATE', cache key: 'severity:update:errId'.
+ *   Model Identifier Format: 'update-error-{timestamp}'.
+ *   Example Usage: Dependency version mismatch alerts.
+ *
+ * - 'alert': Urgent but non-critical notifications.
+ *   Identifiers: lowercase: 'alert', camelCase: 'alertMessage', snake_case: 'alert_message', ALL_CAP: 'ALERT', cache key: 'severity:alert:errId'.
+ *   Model Identifier Format: 'alert-error-{timestamp}'.
+ *   Example Usage: UI alerts in DomsRouteError.tsx.
+ *
+ * - 'notice': Notable non-error events.
+ *   Identifiers: lowercase: 'notice', camelCase: 'noticeMessage', snake_case: 'notice_message', ALL_CAP: 'NOTICE', cache key: 'severity:notice:errId'.
+ *   Model Identifier Format: 'notice-error-{timestamp}'.
+ *   Example Usage: Informational banners in UI.
+ *
+ * - 'trace': Step-by-step execution tracing for debugging.
+ *   Identifiers: lowercase: 'trace', camelCase: 'traceLog', snake_case: 'trace_log', ALL_CAP: 'TRACE', cache key: 'severity:trace:errId'.
+ *   Model Identifier Format: 'trace-error-{timestamp}'.
+ *   Example Usage: Detailed stack traces in DomsError.ts.
+ *
+ * - 'low': Minor issues with minimal impact.
+ *   Identifiers: lowercase: 'low', camelCase: 'lowPriority', snake_case: 'low_priority', ALL_CAP: 'LOW', cache key: 'severity:low:errId'.
+ *   Model Identifier Format: 'low-error-{timestamp}'.
+ *   Example Usage: Throttled logs in ErrorManager.ts.
+ *
+ * - 'medium': Operational issues with moderate impact.
+ *   Identifiers: lowercase: 'medium', camelCase: 'mediumPriority', snake_case: 'medium_priority', ALL_CAP: 'MEDIUM', cache key: 'severity:medium:errId'.
+ *   Model Identifier Format: 'medium-error-{timestamp}'.
+ *   Example Usage: Performance warnings in production.
+ *
+ * - 'high': Urgent but recoverable issues.
+ *   Identifiers: lowercase: 'high', camelCase: 'highPriority', snake_case: 'high_priority', ALL_CAP: 'HIGH', cache key: 'severity:high:errId'.
+ *   Model Identifier Format: 'high-error-{timestamp}'.
+ *   Example Usage: Retryable network errors in DomsClientError.tsx.
+ *
+ * - 'deprecation': Warnings for deprecated features.
+ *   Identifiers: lowercase: 'deprecation', camelCase: 'deprecationWarning', snake_case: 'deprecation_warning', ALL_CAP: 'DEPRECATION', cache key: 'severity:deprecation:errId'.
+ *   Model Identifier Format: 'deprecation-error-{timestamp}'.
+ *   Example Usage: React 19.1+ deprecation notices.
+ *
+ * - 'experimental': Alerts for beta/experimental features.
+ *   Identifiers: lowercase: 'experimental', camelCase: 'experimentalFeature', snake_case: 'experimental_feature', ALL_CAP: 'EXPERIMENTAL', cache key: 'severity:experimental:errId'.
+ *   Model Identifier Format: 'experimental-error-{timestamp}'.
+ *   Example Usage: Beta feature errors in DndCoLab integrations.
+ *
+ * - 'compliance': Regulatory or compliance violations.
+ *   Identifiers: lowercase: 'compliance', camelCase: 'complianceIssue', snake_case: 'compliance_issue', ALL_CAP: 'COMPLIANCE', cache key: 'severity:compliance:errId'.
+ *   Model Identifier Format: 'compliance-error-{timestamp}'.
+ *   Example Usage: GDPR-related error logging.
+ *
+ * - 'maintenance': Scheduled maintenance notifications.
+ *   Identifiers: lowercase: 'maintenance', camelCase: 'maintenanceNotice', snake_case: 'maintenance_notice', ALL_CAP: 'MAINTENANCE', cache key: 'severity:maintenance:errId'.
+ *   Model Identifier Format: 'maintenance-error-{timestamp}'.
+ *   Example Usage: Scheduled downtime alerts in UI.
+ */
+export type ErrorSeverityTaxonomy = CoreErrorSeverity | CustomErrorSeverity;
+export type CoreErrorSeverity = 'fraud' | 'hacking' | 'brutal' | 'critical' | 'fatal' | 'error' | 'warn' | 'info' | 'debug' | 'expired' | 'update' | 'alert' | 'notice' | 'trace' | 'low' | 'medium' | 'high' | 'deprecation' | 'experimental' | 'compliance' | 'maintenance';
+export type CustomErrorSeverity = string & { __severity?: 'CustomErrorSeverity' };
+
+/**
+ * Union type representing ErrorRuntimeTaxonomy in the DOMSpec ecosystem.
+ * Defines runtime environments for errors in @dndhub/error, supporting multi-environment deployments.
+ *
+ * - 'router': Errors in routing logic.
+ *   Classifications: Next.js routing standards.
+ *   Identifiers: lowercase: 'router', camelCase: 'routerError', snake_case: 'router_error', ALL_CAP: 'ROUTER', cache key: 'runtime:router:errId'.
+ *   Model Identifier Format: 'router-error-{timestamp}'.
+ *   Example Usage: DomsRouteError.tsx handling routing errors.
+ *
+ * - 'client': Client-side errors in browser.
+ *   Identifiers: lowercase: 'client', camelCase: 'clientError', snake_case: 'client_error', ALL_CAP: 'CLIENT', cache key: 'runtime:client:errId'.
+ *   Model Identifier Format: 'client-error-{timestamp}'.
+ *   Example Usage: DomsClientError.tsx rendering client errors.
+ *
+ * - 'server': Server-side errors.
+ *   Identifiers: lowercase: 'server', camelCase: 'serverError', snake_case: 'server_error', ALL_CAP: 'SERVER', cache key: 'runtime:server:errId'.
+ *   Model Identifier Format: 'server-error-{timestamp}'.
+ *   Example Usage: Server logs in DomsError.ts.
+ *
+ * - 'cli': Command-line interface errors.
+ *   Identifiers: lowercase: 'cli', camelCase: 'cliError', snake_case: 'cli_error', ALL_CAP: 'CLI', cache key: 'runtime:cli:errId'.
+ *   Model Identifier Format: 'cli-error-{timestamp}'.
+ *   Example Usage: CLI command failures in build scripts.
+ *
+ * - 'universal': Errors applicable to multiple environments.
+ *   Identifiers: lowercase: 'universal', camelCase: 'universalError', snake_case: 'universal_error', ALL_CAP: 'UNIVERSAL', cache key: 'runtime:universal:errId'.
+ *   Model Identifier Format: 'universal-error-{timestamp}'.
+ *   Example Usage: Shared error logic in ErrorManager.ts.
+ *
+ * - 'fluxr': Fluxr-specific errors.
+ *   Identifiers: lowercase: 'fluxr', camelCase: 'fluxrError', snake_case: 'fluxr_error', ALL_CAP: 'FLUXR', cache key: 'runtime:fluxr:errId'.
+ *   Model Identifier Format: 'fluxr-error-{timestamp}'.
+ *   Example Usage: Fluxr middleware errors.
+ *
+ * - 'framr': Framr-specific errors.
+ *   Identifiers: lowercase: 'framr', camelCase: 'framrError', snake_case: 'framr_error', ALL_CAP: 'FRAMR', cache key: 'runtime:framr:errId'.
+ *   Model Identifier Format: 'framr-error-{timestamp}'.
+ *   Example Usage: Framr framework errors.
+ *
+ * - 'unknown': Unclassified runtime errors.
+ *   Identifiers: lowercase: 'unknown', camelCase: 'unknownError', snake_case: 'unknown_error', ALL_CAP: 'UNKNOWN', cache key: 'runtime:unknown:errId'.
+ *   Model Identifier Format: 'unknown-error-{timestamp}'.
+ *   Example Usage: Fallback in getDefaultError (DomsError.ts).
+ *
+ * - 'build': Build-time errors.
+ *   Identifiers: lowercase: 'build', camelCase: 'buildError', snake_case: 'build_error', ALL_CAP: 'BUILD', cache key: 'runtime:build:errId'.
+ *   Model Identifier Format: 'build-error-{timestamp}'.
+ *   Example Usage: Webpack/Vite compilation failures.
+ *
+ * - 'test': Unit or integration test failures.
+ *   Identifiers: lowercase: 'test', camelCase: 'testError', snake_case: 'test_error', ALL_CAP: 'TEST', cache key: 'runtime:test:errId'.
+ *   Model Identifier Format: 'test-error-{timestamp}'.
+ *   Example Usage: Jest/Vitest test case failures.
+ *
+ * - 'deploy': CI/CD deployment pipeline errors.
+ *   Identifiers: lowercase: 'deploy', camelCase: 'deployError', snake_case: 'deploy_error', ALL_CAP: 'DEPLOY', cache key: 'runtime:deploy:errId'.
+ *   Model Identifier Format: 'deploy-error-{timestamp}'.
+ *   Example Usage: Vercel deployment failures.
+ *
+ * - 'edge': CDN or edge computing errors.
+ *   Identifiers: lowercase: 'edge', camelCase: 'edgeError', snake_case: 'edge_error', ALL_CAP: 'EDGE', cache key: 'runtime:edge:errId'.
+ *   Model Identifier Format: 'edge-error-{timestamp}'.
+ *   Example Usage: Cloudflare edge network errors.
+ *
+ * - 'worker': Web worker or service worker errors.
+ *   Identifiers: lowercase: 'worker', camelCase: 'workerError', snake_case: 'worker_error', ALL_CAP: 'WORKER', cache key: 'runtime:worker:errId'.
+ *   Model Identifier Format: 'worker-error-{timestamp}'.
+ *   Example Usage: Service worker registration failures.
+ *
+ * - 'mobile': Native mobile app errors.
+ *   Identifiers: lowercase: 'mobile', camelCase: 'mobileError', snake_case: 'mobile_error', ALL_CAP: 'MOBILE', cache key: 'runtime:mobile:errId'.
+ *   Model Identifier Format: 'mobile-error-{timestamp}'.
+ *   Example Usage: React Native integration errors.
+ *
+ * - 'hybrid': Mixed SSR/CSR rendering errors.
+ *   Identifiers: lowercase: 'hybrid', camelCase: 'hybridError', snake_case: 'hybrid_error', ALL_CAP: 'HYBRID', cache key: 'runtime:hybrid:errId'.
+ *   Model Identifier Format: 'hybrid-error-{timestamp}'.
+ *   Example Usage: Next.js hydration errors.
+ */
+export type ErrorRuntimeTaxonomy = CoreErrorRuntime | CustomErrorRuntime;
+export type CoreErrorRuntime = 'router' | 'client' | 'server' | 'cli' | 'universal' | 'fluxr' | 'framr' | 'unknown' | 'build' | 'test' | 'deploy' | 'edge' | 'worker' | 'mobile' | 'hybrid';
+export type CustomErrorRuntime = string & { __runtime?: 'CustomErrorRuntime' };
+
+/**
+ * Union type representing ErrorCategoryTaxonomy in the DOMSpec ecosystem.
+ * Categorizes errors for better filtering and reporting in @dndhub/error.
+ *
+ * - 'unknown': Unclassified errors.
+ *   Identifiers: lowercase: 'unknown', camelCase: 'unknownCategory', snake_case: 'unknown_category', ALL_CAP: 'UNKNOWN', cache key: 'category:unknown:errId'.
+ *   Model Identifier Format: 'unknown-error-{timestamp}'.
+ *   Example Usage: Default category in DomsError.ts.
+ *
+ * - 'middleware': Middleware processing errors.
+ *   Identifiers: lowercase: 'middleware', camelCase: 'middlewareError', snake_case: 'middleware_error', ALL_CAP: 'MIDDLEWARE', cache key: 'category:middleware:errId'.
+ *   Model Identifier Format: 'middleware-error-{timestamp}'.
+ *   Example Usage: Fluxr middleware failures.
+ *
+ * - 'routing': Routing-related errors.
+ *   Identifiers: lowercase: 'routing', camelCase: 'routingError', snake_case: 'routing_error', ALL_CAP: 'ROUTING', cache key: 'category:routing:errId'.
+ *   Model Identifier Format: 'routing-error-{timestamp}'.
+ *   Example Usage: DomsRouteError.tsx handling route mismatches.
+ *
+ * - 'api': API request/response errors.
+ *   Identifiers: lowercase: 'api', camelCase: 'apiError', snake_case: 'api_error', ALL_CAP: 'API', cache key: 'category:api:errId'.
+ *   Model Identifier Format: 'api-error-{timestamp}'.
+ *   Example Usage: FetchrRequest failures in DomsError.ts.
+ *
+ * - 'initialization': System or component initialization errors.
+ *   Identifiers: lowercase: 'initialization', camelCase: 'initError', snake_case: 'init_error', ALL_CAP: 'INITIALIZATION', cache key: 'category:initialization:errId'.
+ *   Model Identifier Format: 'init-error-{timestamp}'.
+ *   Example Usage: React component mount failures.
+ *
+ * - 'form': Form validation or submission errors.
+ *   Identifiers: lowercase: 'form', camelCase: 'formError', snake_case: 'form_error', ALL_CAP: 'FORM', cache key: 'category:form:errId'.
+ *   Model Identifier Format: 'form-error-{timestamp}'.
+ *   Example Usage: Trakfox form submission failures.
+ *
+ * - 'access': Access control errors.
+ *   Identifiers: lowercase: 'access', camelCase: 'accessError', snake_case: 'access_error', ALL_CAP: 'ACCESS', cache key: 'category:access:errId'.
+ *   Model Identifier Format: 'access-error-{timestamp}'.
+ *   Example Usage: Unauthorized access attempts.
+ *
+ * - 'navigation': Navigation-related errors.
+ *   Identifiers: lowercase: 'navigation', camelCase: 'navError', snake_case: 'nav_error', ALL_CAP: 'NAVIGATION', cache key: 'category:navigation:errId'.
+ *   Model Identifier Format: 'nav-error-{timestamp}'.
+ *   Example Usage: Broken links in DomsRouteError.tsx.
+ *
+ * - 'verification': Verification process errors.
+ *   Identifiers: lowercase: 'verification', camelCase: 'verifyError', snake_case: 'verify_error', ALL_CAP: 'VERIFICATION', cache key: 'category:verification:errId'.
+ *   Model Identifier Format: 'verify-error-{timestamp}'.
+ *   Example Usage: Email verification failures.
+ *
+ * - 'aborted': Aborted operations.
+ *   Identifiers: lowercase: 'aborted', camelCase: 'abortedError', snake_case: 'aborted_error', ALL_CAP: 'ABORTED', cache key: 'category:aborted:errId'.
+ *   Model Identifier Format: 'aborted-error-{timestamp}'.
+ *   Example Usage: Cancelled API requests.
+ *
+ * - 'validation': Data validation errors.
+ *   Identifiers: lowercase: 'validation', camelCase: 'validationError', snake_case: 'validation_error', ALL_CAP: 'VALIDATION', cache key: 'category:validation:errId'.
+ *   Model Identifier Format: 'validation-error-{timestamp}'.
+ *   Example Usage: Form input validation failures.
+ *
+ * - 'authentication': Authentication process errors.
+ *   Identifiers: lowercase: 'authentication', camelCase: 'authError', snake_case: 'auth_error', ALL_CAP: 'AUTHENTICATION', cache key: 'category:authentication:errId'.
+ *   Model Identifier Format: 'auth-error-{timestamp}'.
+ *   Example Usage: Invalid JWT tokens in DndCoLab.
+ *
+ * - 'authorization': Authorization process errors.
+ *   Identifiers: lowercase: 'authorization', camelCase: 'authzError', snake_case: 'authz_error', ALL_CAP: 'AUTHORIZATION', cache key: 'category:authorization:errId'.
+ *   Model Identifier Format: 'authz-error-{timestamp}'.
+ *   Example Usage: Role-based access denials.
+ *
+ * - 'internal': Internal system errors.
+ *   Identifiers: lowercase: 'internal', camelCase: 'internalError', snake_case: 'internal_error', ALL_CAP: 'INTERNAL', cache key: 'category:internal:errId'.
+ *   Model Identifier Format: 'internal-error-{timestamp}'.
+ *   Example Usage: Unexpected server errors.
+ *
+ * - 'configuration': System configuration errors.
+ *   Identifiers: lowercase: 'configuration', camelCase: 'configError', snake_case: 'config_error', ALL_CAP: 'CONFIGURATION', cache key: 'category:configuration:errId'.
+ *   Model Identifier Format: 'config-error-{timestamp}'.
+ *   Example Usage: Missing environment variables.
+ *
+ * - 'performance': Performance-related issues.
+ *   Identifiers: lowercase: 'performance', camelCase: 'perfError', snake_case: 'perf_error', ALL_CAP: 'PERFORMANCE', cache key: 'category:performance:errId'.
+ *   Model Identifier Format: 'perf-error-{timestamp}'.
+ *   Example Usage: Slow API response times.
+ *
+ * - 'security': Security-related issues.
+ *   Identifiers: lowercase: 'security', camelCase: 'securityError', snake_case: 'security_error', ALL_CAP: 'SECURITY', cache key: 'category:security:errId'.
+ *   Model Identifier Format: 'security-error-{timestamp}'.
+ *   Example Usage: XSS attempts detected by securityAnalyzer.
+ *
+ * - 'integration': Third-party integration errors.
+ *   Identifiers: lowercase: 'integration', camelCase: 'integrationError', snake_case: 'integration_error', ALL_CAP: 'INTEGRATION', cache key: 'category:integration:errId'.
+ *   Model Identifier Format: 'integration-error-{timestamp}'.
+ *   Example Usage: HealthOrb DHIS2 API failures.
+ *
+ * - 'unexpected': Unforeseen errors.
+ *   Identifiers: lowercase: 'unexpected', camelCase: 'unexpectedError', snake_case: 'unexpected_error', ALL_CAP: 'UNEXPECTED', cache key: 'category:unexpected:errId'.
+ *   Model Identifier Format: 'unexpected-error-{timestamp}'.
+ *   Example Usage: Fallback for unhandled exceptions.
+ *
+ * - 'rate limit': Rate-limiting errors.
+ *   Identifiers: lowercase: 'rate_limit', camelCase: 'rateLimitError', snake_case: 'rate_limit_error', ALL_CAP: 'RATE_LIMIT', cache key: 'category:rate_limit:errId'.
+ *   Model Identifier Format: 'rate-limit-error-{timestamp}'.
+ *   Example Usage: API rate limit exceeded.
+ *
+ * - 'network': Network connectivity issues.
+ *   Identifiers: lowercase: 'network', camelCase: 'networkError', snake_case: 'network_error', ALL_CAP: 'NETWORK', cache key: 'category:network:errId'.
+ *   Model Identifier Format: 'network-error-{timestamp}'.
+ *   Example Usage: DNS resolution failures.
+ *
+ * - 'dependency': Third-party dependency errors.
+ *   Identifiers: lowercase: 'dependency', camelCase: 'dependencyError', snake_case: 'dependency_error', ALL_CAP: 'DEPENDENCY', cache key: 'category:dependency:errId'.
+ *   Model Identifier Format: 'dependency-error-{timestamp}'.
+ *   Example Usage: Tailwind CSS version conflicts.
+ *
+ * - 'protocol': Protocol adherence issues.
+ *   Identifiers: lowercase: 'protocol', camelCase: 'protocolError', snake_case: 'protocol_error', ALL_CAP: 'PROTOCOL', cache key: 'category:protocol:errId'.
+ *   Model Identifier Format: 'protocol-error-{timestamp}'.
+ *   Example Usage: HTTP/2 stream errors.
+ *
+ * - 'resource': Resource usage errors.
+ *   Identifiers: lowercase: 'resource', camelCase: 'resourceError', snake_case: 'resource_error', ALL_CAP: 'RESOURCE', cache key: 'category:resource:errId'.
+ *   Model Identifier Format: 'resource-error-{timestamp}'.
+ *   Example Usage: Memory leaks in client.
+ *
+ * - 'concurrency': Concurrency-related errors.
+ *   Identifiers: lowercase: 'concurrency', camelCase: 'concurrencyError', snake_case: 'concurrency_error', ALL_CAP: 'CONCURRENCY', cache key: 'category:concurrency:errId'.
+ *   Model Identifier Format: 'concurrency-error-{timestamp}'.
+ *   Example Usage: Race conditions in state updates.
+ *
+ * - 'user action': Errors from user actions.
+ *   Identifiers: lowercase: 'user_action', camelCase: 'userActionError', snake_case: 'user_action_error', ALL_CAP: 'USER_ACTION', cache key: 'category:user_action:errId'.
+ *   Model Identifier Format: 'user-action-error-{timestamp}'.
+ *   Example Usage: Invalid form inputs.
+ *
+ * - 'system': OS or hardware errors.
+ *   Identifiers: lowercase: 'system', camelCase: 'systemError', snake_case: 'system_error', ALL_CAP: 'SYSTEM', cache key: 'category:system:errId'.
+ *   Model Identifier Format: 'system-error-{timestamp}'.
+ *   Example Usage: Disk space issues.
+ *
+ * - 'config': Runtime configuration errors.
+ *   Identifiers: lowercase: 'config', camelCase: 'configError', snake_case: 'config_error', ALL_CAP: 'CONFIG', cache key: 'category:config:errId'.
+ *   Model Identifier Format: 'config-error-{timestamp}'.
+ *   Example Usage: Invalid Vercel KV configs.
+ *
+ * - 'storage': Storage-related errors.
+ *   Identifiers: lowercase: 'storage', camelCase: 'storageError', snake_case: 'storage_error', ALL_CAP: 'STORAGE', cache key: 'category:storage:errId'.
+ *   Model Identifier Format: 'storage-error-{timestamp}'.
+ *   Example Usage: Session storage corruption.
+ *
+ * - 'test': Simulated test errors.
+ *   Identifiers: lowercase: 'test', camelCase: 'testError', snake_case: 'test_error', ALL_CAP: 'TEST', cache key: 'category:test:errId'.
+ *   Model Identifier Format: 'test-error-{timestamp}'.
+ *   Example Usage: Mock errors in unit tests.
+ *
+ * - 'auth': Combined auth errors.
+ *   Identifiers: lowercase: 'auth', camelCase: 'authError', snake_case: 'auth_error', ALL_CAP: 'AUTH', cache key: 'category:auth:errId'.
+ *   Model Identifier Format: 'auth-error-{timestamp}'.
+ *   Example Usage: OAuth token failures.
+ *
+ * - 'cache': Caching mechanism errors.
+ *   Identifiers: lowercase: 'cache', camelCase: 'cacheError', snake_case: 'cache_error', ALL_CAP: 'CACHE', cache key: 'category:cache:errId'.
+ *   Model Identifier Format: 'cache-error-{timestamp}'.
+ *   Example Usage: Redis cache misses.
+ *
+ * - 'crypto': Cryptographic operation errors.
+ *   Identifiers: lowercase: 'crypto', camelCase: 'cryptoError', snake_case: 'crypto_error', ALL_CAP: 'CRYPTO', cache key: 'category:crypto:errId'.
+ *   Model Identifier Format: 'crypto-error-{timestamp}'.
+ *   Example Usage: Encryption key mismatches.
+ *
+ * - 'redirect': Redirect-related errors.
+ *   Identifiers: lowercase: 'redirect', camelCase: 'redirectError', snake_case: 'redirect_error', ALL_CAP: 'REDIRECT', cache key: 'category:redirect:errId'.
+ *   Model Identifier Format: 'redirect-error-{timestamp}'.
+ *   Example Usage: Invalid redirect URLs.
+ *
+ * - 'transaction': Transaction processing errors.
+ *   Identifiers: lowercase: 'transaction', camelCase: 'transactionError', snake_case: 'transaction_error', ALL_CAP: 'TRANSACTION', cache key: 'category:transaction:errId'.
+ *   Model Identifier Format: 'transaction-error-{timestamp}'.
+ *   Example Usage: Payment gateway failures.
+ *
+ * - 'database': Database operation errors.
+ *   Identifiers: lowercase: 'database', camelCase: 'databaseError', snake_case: 'database_error', ALL_CAP: 'DATABASE', cache key: 'category:database:errId'.
+ *   Model Identifier Format: 'database-error-{timestamp}'.
+ *   Example Usage: Supabase query failures.
+ *
+ * - 'cookie': Cookie-related errors.
+ *   Identifiers: lowercase: 'cookie', camelCase: 'cookieError', snake_case: 'cookie_error', ALL_CAP: 'COOKIE', cache key: 'category:cookie:errId'.
+ *   Model Identifier Format: 'cookie-error-{timestamp}'.
+ *   Example Usage: Invalid cookie formats.
+ *
+ * - 'request': HTTP request errors.
+ *   Identifiers: lowercase: 'request', camelCase: 'requestError', snake_case: 'request_error', ALL_CAP: 'REQUEST', cache key: 'category:request:errId'.
+ *   Model Identifier Format: 'request-error-{timestamp}'.
+ *   Example Usage: Malformed FetchrRequest.
+ *
+ * - 'response': HTTP response errors.
+ *   Identifiers: lowercase: 'response', camelCase: 'responseError', snake_case: 'response_error', ALL_CAP: 'RESPONSE', cache key: 'category:response:errId'.
+ *   Model Identifier Format: 'response-error-{timestamp}'.
+ *   Example Usage: Invalid FetchrResponse.
+ *
+ * - 'policy': Policy enforcement errors.
+ *   Identifiers: lowercase: 'policy', camelCase: 'policyError', snake_case: 'policy_error', ALL_CAP: 'POLICY', cache key: 'category:policy:errId'.
+ *   Model Identifier Format: 'policy-error-{timestamp}'.
+ *   Example Usage: CSP violations.
+ *
+ * - 'IDB': IndexedDB errors.
+ *   Identifiers: lowercase: 'idb', camelCase: 'idbError', snake_case: 'idb_error', ALL_CAP: 'IDB', cache key: 'category:idb:errId'.
+ *   Model Identifier Format: 'idb-error-{timestamp}'.
+ *   Example Usage: IndexedDB transaction failures.
+ *
+ * - 'localStorage': Local storage errors.
+ *   Identifiers: lowercase: 'localstorage', camelCase: 'localStorageError', snake_case: 'local_storage_error', ALL_CAP: 'LOCALSTORAGE', cache key: 'category:localstorage:errId'.
+ *   Model Identifier Format: 'localstorage-error-{timestamp}'.
+ *   Example Usage: Quota exceeded errors.
+ *
+ * - 'memoryStorage': In-memory storage errors.
+ *   Identifiers: lowercase: 'memorystorage', camelCase: 'memoryStorageError', snake_case: 'memory_storage_error', ALL_CAP: 'MEMORYSTORAGE', cache key: 'category:memorystorage:errId'.
+ *   Model Identifier Format: 'memorystorage-error-{timestamp}'.
+ *   Example Usage: Memory cache overflows.
+ *
+ * - 'sessionStorage': Session storage errors.
+ *   Identifiers: lowercase: 'sessionstorage', camelCase: 'sessionStorageError', snake_case: 'session_storage_error', ALL_CAP: 'SESSIONSTORAGE', cache key: 'category:sessionstorage:errId'.
+ *   Model Identifier Format: 'sessionstorage-error-{timestamp}'.
+ *   Example Usage: Session storage corruption.
+ *
+ * - 'ui': UI rendering/component errors.
+ *   Identifiers: lowercase: 'ui', camelCase: 'uiError', snake_case: 'ui_error', ALL_CAP: 'UI', cache key: 'category:ui:errId'.
+ *   Model Identifier Format: 'ui-error-{timestamp}'.
+ *   Example Usage: React component render failures.
+ *
+ * - 'state': State management errors.
+ *   Identifiers: lowercase: 'state', camelCase: 'stateError', snake_case: 'state_error', ALL_CAP: 'STATE', cache key: 'category:state:errId'.
+ *   Model Identifier Format: 'state-error-{timestamp}'.
+ *   Example Usage: Redux store corruption.
+ *
+ * - 'hydration': SSR hydration mismatch errors.
+ *   Identifiers: lowercase: 'hydration', camelCase: 'hydrationError', snake_case: 'hydration_error', ALL_CAP: 'HYDRATION', cache key: 'category:hydration:errId'.
+ *   Model Identifier Format: 'hydration-error-{timestamp}'.
+ *   Example Usage: Next.js hydration mismatches.
+ *
+ * - 'serialization': Data serialization errors.
+ *   Identifiers: lowercase: 'serialization', camelCase: 'serializationError', snake_case: 'serialization_error', ALL_CAP: 'SERIALIZATION', cache key: 'category:serialization:errId'.
+ *   Model Identifier Format: 'serialization-error-{timestamp}'.
+ *   Example Usage: JSON parsing errors.
+ *
+ * - 'migration': Data or schema migration errors.
+ *   Identifiers: lowercase: 'migration', camelCase: 'migrationError', snake_case: 'migration_error', ALL_CAP: 'MIGRATION', cache key: 'category:migration:errId'.
+ *   Model Identifier Format: 'migration-error-{timestamp}'.
+ *   Example Usage: Database schema upgrade failures.
+ *
+ * - 'backup': Data backup or recovery errors.
+ *   Identifiers: lowercase: 'backup', camelCase: 'backupError', snake_case: 'backup_error', ALL_CAP: 'BACKUP', cache key: 'category:backup:errId'.
+ *   Model Identifier Format: 'backup-error-{timestamp}'.
+ *   Example Usage: Failed backup operations.
+ *
+ * - 'analytics': Analytics tracking errors.
+ *   Identifiers: lowercase: 'analytics', camelCase: 'analyticsError', snake_case: 'analytics_error', ALL_CAP: 'ANALYTICS', cache key: 'category:analytics:errId'.
+ *   Model Identifier Format: 'analytics-error-{timestamp}'.
+ *   Example Usage: Google Analytics tracking failures.
+ */
+type ErrorCategoryTaxonomy = CoreErrorCategory | CustomErrorCategory;
+type CoreErrorCategory = 'unknown' | 'middleware' | 'routing' | 'api' | 'initialization' | 'form' | 'access' | 'navigation' | 'verification' | 'aborted' | 'validation' | 'authentication' | 'authorization' | 'internal' | 'configuration' | 'performance' | 'security' | 'integration' | 'unexpected' | 'rate limit' | 'network' | 'dependency' | 'protocol' | 'resource' | 'concurrency' | 'user action' | 'system' | 'config' | 'storage' | 'test' | 'auth' | 'cache' | 'crypto' | 'redirect' | 'transaction' | 'database' | 'cookie' | 'request' | 'response' | 'policy' | 'IDB' | 'localStorage' | 'memoryStorage' | 'sessionStorage' | 'ui' | 'state' | 'hydration' | 'serialization' | 'migration' | 'backup' | 'analytics';
+type CustomErrorCategory = string & { __category?: 'CustomErrorCategory' };
+
+/**
+ * Union type representing ErrorLogLevelTaxonomy in the DOMSpec ecosystem.
+ * Defines logging levels for errors, aligned with ErrorSeverityTaxonomy for consistency.
+ *
+ * - 'error': Serious issues requiring immediate attention.
+ *   Classifications: Aligns with ErrorSeverity.Error.
+ *   Identifiers: lowercase: 'error', camelCase: 'errorLog', snake_case: 'error_log', ALL_CAP: 'ERROR', cache key: 'loglevel:error:errId'.
+ *   Model Identifier Format: 'error-log-{timestamp}'.
+ *   Example Usage: Console.error in DomsError.ts.
+ *
+ * - 'warn': Warnings about potential problems.
+ *   Identifiers: lowercase: 'warn', camelCase: 'warnLog', snake_case: 'warn_log', ALL_CAP: 'WARN', cache key: 'loglevel:warn:errId'.
+ *   Model Identifier Format: 'warn-log-{timestamp}'.
+ *   Example Usage: Console.warn in development.
+ *
+ * - 'info': General informational messages.
+ *   Identifiers: lowercase: 'info', camelCase: 'infoLog', snake_case: 'info_log', ALL_CAP: 'INFO', cache key: 'loglevel:info:errId'.
+ *   Model Identifier Format: 'info-log-{timestamp}'.
+ *   Example Usage: Console.info for operation logs.
+ *
+ * - 'debug': Debug-level messages for developers.
+ *   Identifiers: lowercase: 'debug', camelCase: 'debugLog', snake_case: 'debug_log', ALL_CAP: 'DEBUG', cache key: 'loglevel:debug:errId'.
+ *   Model Identifier Format: 'debug-log-{timestamp}'.
+ *   Example Usage: Detailed logs in DomsError.ts.
+ *
+ * - 'verbose': Extremely detailed logs for advanced debugging.
+ *   Identifiers: lowercase: 'verbose', camelCase: 'verboseLog', snake_case: 'verbose_log', ALL_CAP: 'VERBOSE', cache key: 'loglevel:verbose:errId'.
+ *   Model Identifier Format: 'verbose-log-{timestamp}'.
+ *   Example Usage: Verbose logging in test environments.
+ *
+ * - 'notice': Notable non-error events.
+ *   Identifiers: lowercase: 'notice', camelCase: 'noticeLog', snake_case: 'notice_log', ALL_CAP: 'NOTICE', cache key: 'loglevel:notice:errId'.
+ *   Model Identifier Format: 'notice-log-{timestamp}'.
+ *   Example Usage: UI notifications in DomsClientError.tsx.
+ *
+ * - 'fatal': System crash or unrecoverable errors.
+ *   Identifiers: lowercase: 'fatal', camelCase: 'fatalLog', snake_case: 'fatal_log', ALL_CAP: 'FATAL', cache key: 'loglevel:fatal:errId'.
+ *   Model Identifier Format: 'fatal-log-{timestamp}'.
+ *   Example Usage: Server crash logs.
+ *
+ * - 'audit': Security or compliance-related logs.
+ *   Identifiers: lowercase: 'audit', camelCase: 'auditLog', snake_case: 'audit_log', ALL_CAP: 'AUDIT', cache key: 'loglevel:audit:errId'.
+ *   Model Identifier Format: 'audit-log-{timestamp}'.
+ *   Example Usage: Security audits in securityAnalyzer.
+ *
+ * - 'trace': Step-by-step function call logs.
+ *   Identifiers: lowercase: 'trace', camelCase: 'traceLog', snake_case: 'trace_log', ALL_CAP: 'TRACE', cache key: 'loglevel:trace:errId'.
+ *   Model Identifier Format: 'trace-log-{timestamp}'.
+ *   Example Usage: Stack traces in DomsError.ts.
+ *
+ * - 'expired': Expired resource or session logs.
+ *   Identifiers: lowercase: 'expired', camelCase: 'expiredLog', snake_case: 'expired_log', ALL_CAP: 'EXPIRED', cache key: 'loglevel:expired:errId'.
+ *   Model Identifier Format: 'expired-log-{timestamp}'.
+ *   Example Usage: Session timeout logs.
+ *
+ * - 'update': Update-related logs.
+ *   Identifiers: lowercase: 'update', camelCase: 'updateLog', snake_case: 'update_log', ALL_CAP: 'UPDATE', cache key: 'loglevel:update:errId'.
+ *   Model Identifier Format: 'update-log-{timestamp}'.
+ *   Example Usage: Dependency update notifications.
+ *
+ * - 'alert': Urgent notification logs.
+ *   Identifiers: lowercase: 'alert', camelCase: 'alertLog', snake_case: 'alert_log', ALL_CAP: 'ALERT', cache key: 'loglevel:alert:errId'.
+ *   Model Identifier Format: 'alert-log-{timestamp}'.
+ *   Example Usage: UI alerts in DomsRouteError.tsx.
+ *
+ * - 'silly': Extremely verbose logs (npm style).
+ *   Identifiers: lowercase: 'silly', camelCase: 'sillyLog', snake_case: 'silly_log', ALL_CAP: 'SILLY', cache key: 'loglevel:silly:errId'.
+ *   Model Identifier Format: 'silly-log-{timestamp}'.
+ *   Example Usage: Debug logs in development.
+ *
+ * - 'performance': Performance metric logs.
+ *   Identifiers: lowercase: 'performance', camelCase: 'perfLog', snake_case: 'perf_log', ALL_CAP: 'PERFORMANCE', cache key: 'loglevel:performance:errId'.
+ *   Model Identifier Format: 'perf-log-{timestamp}'.
+ *   Example Usage: API response time logs.
+ *
+ * - 'security': Security event logs.
+ *   Identifiers: lowercase: 'security', camelCase: 'securityLog', snake_case: 'security_log', ALL_CAP: 'SECURITY', cache key: 'loglevel:security:errId'.
+ *   Model Identifier Format: 'security-log-{timestamp}'.
+ *   Example Usage: Security audit logs.
+ *
+ * - 'deprecation': Deprecated feature logs.
+ *   Identifiers: lowercase: 'deprecation', camelCase: 'deprecationLog', snake_case: 'deprecation_log', ALL_CAP: 'DEPRECATION', cache key: 'loglevel:deprecation:errId'.
+ *   Model Identifier Format: 'deprecation-log-{timestamp}'.
+ *   Example Usage: React 19.1+ deprecation logs.
+ *
+ * - 'metric': Quantitative metric logs.
+ *   Identifiers: lowercase: 'metric', camelCase: 'metricLog', snake_case: 'metric_log', ALL_CAP: 'METRIC', cache key: 'loglevel:metric:errId'.
+ *   Model Identifier Format: 'metric-log-{timestamp}'.
+ *   Example Usage: Usage analytics logs.
+ *
+ * - 'event': User event logs.
+ *   Identifiers: lowercase: 'event', camelCase: 'eventLog', snake_case: 'event_log', ALL_CAP: 'EVENT', cache key: 'loglevel:event:errId'.
+ *   Model Identifier Format: 'event-log-{timestamp}'.
+ *   Example Usage: User interaction logs in DndCoLab.
+ *
+ * - 'system': OS or hardware logs.
+ *   Identifiers: lowercase: 'system', camelCase: 'systemLog', snake_case: 'system_log', ALL_CAP: 'SYSTEM', cache key: 'loglevel:system:errId'.
+ *   Model Identifier Format: 'system-log-{timestamp}'.
+ *   Example Usage: Hardware failure logs.
+ */
+type ErrorLogLevelTaxonomy = CoreErrorLogLevel | CustomErrorLogLevel;
+type CoreErrorLogLevel = 'error' | 'warn' | 'info' | 'debug' | 'verbose' | 'notice' | 'fatal' | 'audit' | 'trace' | 'expired' | 'update' | 'alert' | 'silly' | 'performance' | 'security' | 'deprecation' | 'metric' | 'event' | 'system';
+type CustomErrorLogLevel = string & { __logLevel?: 'CustomErrorLogLevel' };
+
+/**
+ * Union type representing TransferEngineStepTaxonomy in the DOMSpec ecosystem.
+ * Defines steps in data transfer processes for @dndhub/error.
+ *
+ * - 'initialization': Setting up the transfer process.
+ *   Identifiers: lowercase: 'initialization', camelCase: 'initStep', snake_case: 'init_step', ALL_CAP: 'INITIALIZATION', cache key: 'step:initialization:errId'.
+ *   Model Identifier Format: 'init-step-{timestamp}'.
+ *   Example Usage: Initializing API requests in DomsError.ts.
+ *
+ * - 'validation': Validating data or process requirements.
+ *   Identifiers: lowercase: 'validation', camelCase: 'validationStep', snake_case: 'validation_step', ALL_CAP: 'VALIDATION', cache key: 'step:validation:errId'.
+ *   Model Identifier Format: 'validation-step-{timestamp}'.
+ *   Example Usage: Form validation in Trakfox forms.
+ *
+ * - 'transfer': Actual data or resource transfer.
+ *   Identifiers: lowercase: 'transfer', camelCase: 'transferStep', snake_case: 'transfer_step', ALL_CAP: 'TRANSFER', cache key: 'step:transfer:errId'.
+ *   Model Identifier Format: 'transfer-step-{timestamp}'.
+ *   Example Usage: API data transfer in FetchrRequest.
+ *
+ * - 'preparation': Pre-transfer setup.
+ *   Identifiers: lowercase: 'preparation', camelCase: 'prepStep', snake_case: 'prep_step', ALL_CAP: 'PREPARATION', cache key: 'step:preparation:errId'.
+ *   Model Identifier Format: 'prep-step-{timestamp}'.
+ *   Example Usage: Setting up headers for API calls.
+ *
+ * - 'execution': Active transfer execution.
+ *   Identifiers: lowercase: 'execution', camelCase: 'execStep', snake_case: 'exec_step', ALL_CAP: 'EXECUTION', cache key: 'step:execution:errId'.
+ *   Model Identifier Format: 'exec-step-{timestamp}'.
+ *   Example Usage: Running transfer logic in server.
+ *
+ * - 'completion': Successful transfer completion.
+ *   Identifiers: lowercase: 'completion', camelCase: 'completeStep', snake_case: 'complete_step', ALL_CAP: 'COMPLETION', cache key: 'step:completion:errId'.
+ *   Model Identifier Format: 'complete-step-{timestamp}'.
+ *   Example Usage: Logging successful transfers.
+ *
+ * - 'rollback': Failure reversal steps.
+ *   Identifiers: lowercase: 'rollback', camelCase: 'rollbackStep', snake_case: 'rollback_step', ALL_CAP: 'ROLLBACK', cache key: 'step:rollback:errId'.
+ *   Model Identifier Format: 'rollback-step-{timestamp}'.
+ *   Example Usage: Reverting failed transactions.
+ *
+ * - 'retry': Automatic retry attempts.
+ *   Identifiers: lowercase: 'retry', camelCase: 'retryStep', snake_case: 'retry_step', ALL_CAP: 'RETRY', cache key: 'step:retry:errId'.
+ *   Model Identifier Format: 'retry-step-{timestamp}'.
+ *   Example Usage: Retrying failed API calls.
+ *
+ * - 'notification': Post-transfer notifications.
+ *   Identifiers: lowercase: 'notification', camelCase: 'notifyStep', snake_case: 'notify_step', ALL_CAP: 'NOTIFICATION', cache key: 'step:notification:errId'.
+ *   Model Identifier Format: 'notify-step-{timestamp}'.
+ *   Example Usage: Sending user notifications.
+ *
+ * - 'audit': Logging or verification post-transfer.
+ *   Identifiers: lowercase: 'audit', camelCase: 'auditStep', snake_case: 'audit_step', ALL_CAP: 'AUDIT', cache key: 'step:audit:errId'.
+ *   Model Identifier Format: 'audit-step-{timestamp}'.
+ *   Example Usage: Audit logs for compliance.
+ */
+type TransferEngineStepTaxonomy = CoreTransferEngineStep | CustomTransferEngineStep;
+type CoreTransferEngineStep = 'initialization' | 'validation' | 'transfer' | 'preparation' | 'execution' | 'completion' | 'rollback' | 'retry' | 'notification' | 'audit';
+type CustomTransferEngineStep = string & { __step?: 'CustomTransferEngineStep' };
+
+/**
+ * Union type representing ErrorStatusTaxonomy in the DOMSpec ecosystem.
+ * Defines HTTP-inspired status codes for errors in @dndhub/error.
+ *
+ * - '400': Bad Request.
+ *   Classifications: HTTP/1.1 (RFC 7231).
+ *   Identifiers: lowercase: '400', camelCase: 'badRequest', snake_case: 'bad_request', ALL_CAP: 'BAD_REQUEST', cache key: 'status:400:errId'.
+ *   Model Identifier Format: 'status-400-{timestamp}'.
+ *   Example Usage: Invalid API request in DomsError.ts.
+ *
+ * - '401': Unauthorized.
+ *   Identifiers: lowercase: '401', camelCase: 'unauthorized', snake_case: 'unauthorized', ALL_CAP: 'UNAUTHORIZED', cache key: 'status:401:errId'.
+ *   Model Identifier Format: 'status-401-{timestamp}'.
+ *   Example Usage: Authentication failures.
+ *
+ * - '403': Forbidden.
+ *   Identifiers: lowercase: '403', camelCase: 'forbidden', snake_case: 'forbidden', ALL_CAP: 'FORBIDDEN', cache key: 'status:403:errId'.
+ *   Model Identifier Format: 'status-403-{timestamp}'.
+ *   Example Usage: Authorization denials.
+ *
+ * - '404': Not Found.
+ *   Identifiers: lowercase: '404', camelCase: 'notFound', snake_case: 'not_found', ALL_CAP: 'NOT_FOUND', cache key: 'status:404:errId'.
+ *   Model Identifier Format: 'status-404-{timestamp}'.
+ *   Example Usage: Missing routes in DomsRouteError.tsx.
+ *
+ * - '429': Too Many Requests.
+ *   Identifiers: lowercase: '429', camelCase: 'tooManyRequests', snake_case: 'too_many_requests', ALL_CAP: 'TOO_MANY_REQUESTS', cache key: 'status:429:errId'.
+ *   Model Identifier Format: 'status-429-{timestamp}'.
+ *   Example Usage: Rate limit errors.
+ *
+ * - '500': Internal Server Error.
+ *   Identifiers: lowercase: '500', camelCase: 'internalServerError', snake_case: 'internal_server_error', ALL_CAP: 'INTERNAL_SERVER_ERROR', cache key: 'status:500:errId'.
+ *   Model Identifier Format: 'status-500-{timestamp}'.
+ *   Example Usage: Server crashes in DomsError.ts.
+ *
+ * - '503': Service Unavailable.
+ *   Identifiers: lowercase: '503', camelCase: 'serviceUnavailable', snake_case: 'service_unavailable', ALL_CAP: 'SERVICE_UNAVAILABLE', cache key: 'status:503:errId'.
+ *   Model Identifier Format: 'status-503-{timestamp}'.
+ *   Example Usage: Maintenance downtime errors.
+ */
+type ErrorStatusTaxonomy = CoreErrorStatus | CustomErrorStatus;
+type CoreErrorStatus = 400 | 401 | 403 | 404 | 429 | 500 | 503;
+type CustomErrorStatus = number & { __httpStatus?: 'CustomErrorStatus' };
+
+/**
+ * Union type representing VersionTaxonomy in the DOMSpec ecosystem.
+ * Defines SemVer-compliant versions for error tracking in @dndhub/error.
+ *
+ * - '1.0.0': Initial stable release.
+ *   Classifications: SemVer 2.0.0.
+ *   Identifiers: lowercase: '1.0.0', camelCase: 'version100', snake_case: 'version_1_0_0', ALL_CAP: 'VERSION_1_0_0', cache key: 'version:1.0.0:errId'.
+ *   Model Identifier Format: 'version-1.0.0-{timestamp}'.
+ *   Example Usage: Default version in DomsError.ts.
+ *
+ * - '2.0.0': Major release with breaking changes.
+ *   Identifiers: lowercase: '2.0.0', camelCase: 'version200', snake_case: 'version_2_0_0', ALL_CAP: 'VERSION_2_0_0', cache key: 'version:2.0.0:errId'.
+ *   Model Identifier Format: 'version-2.0.0-{timestamp}'.
+ *   Example Usage: React 19.1+ compatibility errors.
+ *
+ * - '3.0.0': Next major release.
+ *   Identifiers: lowercase: '3.0.0', camelCase: 'version300', snake_case: 'version_3_0_0', ALL_CAP: 'VERSION_3_0_0', cache key: 'version:3.0.0:errId'.
+ *   Model Identifier Format: 'version-3.0.0-{timestamp}'.
+ *   Example Usage: Future DndHub expansions.
+ */
+export type VersionTaxonomy = CoreVersion | CustomVersion;
+export type CoreVersion = 'latest' | 'stable' | 'beta' | 'alpha' | 'v1' |  'v1.0' | '1.0' | '1.0.0';
+export type CustomVersion = string & { __semver?: 'CustomVersion' };
+
+/**
+ * Union type representing ErrorOriginTaxonomy in the DOMSpec ecosystem.
+ * Defines origins for error tracking in @dndhub/error.
+ *
+ * - 'https://api.example.com': Example API endpoint.
+ *   Classifications: RESTful API standards.
+ *   Identifiers: lowercase: 'https://api.example.com', camelCase: 'apiExampleCom', snake_case: 'api_example_com', ALL_CAP: 'API_EXAMPLE_COM', cache key: 'origin:https://api.example.com:errId'.
+ *   Model Identifier Format: 'origin-api-example-com-{timestamp}'.
+ *   Example Usage: API errors in DomsError.ts.
+ *
+ * - 'http://localhost': Local development server.
+ *   Identifiers: lowercase: 'http://localhost', camelCase: 'localhost', snake_case: 'localhost', ALL_CAP: 'LOCALHOST', cache key: 'origin:http://localhost:errId'.
+ *   Model Identifier Format: 'origin-localhost-{timestamp}'.
+ *   Example Usage: Development errors in DomsClientError.tsx.
+ *
+ * - 'http://localhost:3000': Local development with port.
+ *   Identifiers: lowercase: 'http://localhost:3000', camelCase: 'localhost3000', snake_case: 'localhost_3000', ALL_CAP: 'LOCALHOST_3000', cache key: 'origin:http://localhost:3000:errId'.
+ *   Model Identifier Format: 'origin-localhost-3000-{timestamp}'.
+ *   Example Usage: Next.js dev server errors.
+ *
+ * - 'http://127.0.0.1:8080': Local IP development.
+ *   Identifiers: lowercase: 'http://127.0.0.1:8080', camelCase: 'ip1270018080', snake_case: 'ip_127_0_0_1_8080', ALL_CAP: 'IP_127_0_0_1_8080', cache key: 'origin:http://127.0.0.1:8080:errId'.
+ *   Model Identifier Format: 'origin-ip-127-0-0-1-8080-{timestamp}'.
+ *   Example Usage: Vite dev server errors.
+ *
+ * - 'https://production.trakfox.com': Production environment.
+ *   Identifiers: lowercase: 'https://production.trakfox.com', camelCase: 'productionTrakfox', snake_case: 'production_trakfox', ALL_CAP: 'PRODUCTION_TRAKFOX', cache key: 'origin:https://production.trakfox.com:errId'.
+ *   Model Identifier Format: 'origin-production-trakfox-{timestamp}'.
+ *   Example Usage: Production errors in DndCoLab.
+ *
+ * - 'https://staging.trakfox.com': Staging environment.
+ *   Identifiers: lowercase: 'https://staging.trakfox.com', camelCase: 'stagingTrakfox', snake_case: 'staging_trakfox', ALL_CAP: 'STAGING_TRAKFOX', cache key: 'origin:https://staging.trakfox.com:errId'.
+ *   Model Identifier Format: 'origin-staging-trakfox-{timestamp}'.
+ *   Example Usage: Staging deployment errors.
+ *
+ * - 'https://dev.trakfox.com': Development environment.
+ *   Identifiers: lowercase: 'https://dev.trakfox.com', camelCase: 'devTrakfox', snake_case: 'dev_trakfox', ALL_CAP: 'DEV_TRAKFOX', cache key: 'origin:https://dev.trakfox.com:errId'.
+ *   Model Identifier Format: 'origin-dev-trakfox-{timestamp}'.
+ *   Example Usage: Development environment errors.
+ *
+ * - 'file://': Local file system origin.
+ *   Identifiers: lowercase: 'file://', camelCase: 'fileSystem', snake_case: 'file_system', ALL_CAP: 'FILE_SYSTEM', cache key: 'origin:file://:errId'.
+ *   Model Identifier Format: 'origin-file-system-{timestamp}'.
+ *   Example Usage: File-based errors in CLI.
+ *
+ * - 'null': Sandboxed iframe or opaque origins.
+ *   Identifiers: lowercase: 'null', camelCase: 'nullOrigin', snake_case: 'null_origin', ALL_CAP: 'NULL_ORIGIN', cache key: 'origin:null:errId'.
+ *   Model Identifier Format: 'origin-null-{timestamp}'.
+ *   Example Usage: Sandboxed iframe errors.
+ */
+type OriginTaxonomy = CoreOrigin | CustomOrigin;
+type CoreOrigin = 'https://api.example.com' | 'http://localhost' | 'http://localhost:3000' | 'http://127.0.0.1:8080' | 'https://production.trakfox.com' | 'https://staging.trakfox.com' | 'https://dev.trakfox.com' | 'file://' | 'null';
+type CustomOrigin = string & { __origin?: 'CustomOrigin' };
+
+/**
+ * Union type representing ErrorLibraryTaxonomy in the DOMSpec ecosystem.
+ * Defines libraries causing errors in @dndhub/error.
+ *
+ * - 'react': React library errors.
+ *   Classifications: React 19.1+.
+ *   Identifiers: lowercase: 'react', camelCase: 'reactLibrary', snake_case: 'react_library', ALL_CAP: 'REACT', cache key: 'library:react:errId'.
+ *   Model Identifier Format: 'library-react-{timestamp}'.
+ *   Example Usage: React component errors in ErrorBoundary.tsx.
+ *
+ * - 'typescript': TypeScript-related errors.
+ *   Identifiers: lowercase: 'typescript', camelCase: 'typescriptLibrary', snake_case: 'typescript_library', ALL_CAP: 'TYPESCRIPT', cache key: 'library:typescript:errId'.
+ *   Model Identifier Format: 'library-typescript-{timestamp}'.
+ *   Example Usage: TypeScript 5.8.3 type errors.
+ *
+ * - 'tailwind': Tailwind CSS errors.
+ *   Identifiers: lowercase: 'tailwind', camelCase: 'tailwindLibrary', snake_case: 'tailwind_library', ALL_CAP: 'TAILWIND', cache key: 'library:tailwind:errId'.
+ *   Model Identifier Format: 'library-tailwind-{timestamp}'.
+ *   Example Usage: Tailwind CSS conflicts in DomsClientError.tsx.
+ *
+ *
+ * - 'supabase': Supabase database errors.
+ *   Identifiers: lowercase: 'supabase', camelCase: 'supabaseLibrary', snake_case: 'supabase_library', ALL_CAP: 'SUPABASE', cache key: 'library:supabase:errId'.
+ *   Model Identifier Format: 'library-supabase-{timestamp}'.
+ *   Example Usage: Supabase query failures.
+ */
+type LibraryTaxonomy = CoreLibrary | CustomLibrary;
+type CoreLibrary = 'dndhub-idb' | 'react' | 'typescript' | 'tailwind-css' | 'supabase';
+type CustomLibrary = string & { __library?: 'CustomLibrary' };
+
+/**
+ * Union type representing ErrorTypeTaxonomy in the DOMSpec ecosystem.
+ * Defines JavaScript error types for @dndhub/error.
+ *
+ * - 'TypeError': Type-related errors.
+ *   Classifications: ECMAScript standard.
+ *   Identifiers: lowercase: 'typeerror', camelCase: 'typeError', snake_case: 'type_error', ALL_CAP: 'TYPEERROR', cache key: 'type:typeerror:errId'.
+ *   Model Identifier Format: 'type-typeerror-{timestamp}'.
+ *   Example Usage: Invalid type in DomsError.ts.
+ *
+ * - 'SyntaxError': Syntax-related errors.
+ *   Identifiers: lowercase: 'syntaxerror', camelCase: 'syntaxError', snake_case: 'syntax_error', ALL_CAP: 'SYNTAXERROR', cache key: 'type:syntaxerror:errId'.
+ *   Model Identifier Format: 'type-syntaxerror-{timestamp}'.
+ *   Example Usage: JSON parsing errors.
+ *
+ * - 'ReferenceError': Reference-related errors.
+ *   Identifiers: lowercase: 'referenceerror', camelCase: 'referenceError', snake_case: 'reference_error', ALL_CAP: 'REFERENCEERROR', cache key: 'type:referenceerror:errId'.
+ *   Model Identifier Format: 'type-referenceerror-{timestamp}'.
+ *   Example Usage: Undefined variable errors.
+ *
+ * - 'RangeError': Range-related errors.
+ *   Identifiers: lowercase: 'rangeerror', camelCase: 'rangeError', snake_case: 'range_error', ALL_CAP: 'RANGEERROR', cache key: 'type:rangeerror:errId'.
+ *   Model Identifier Format: 'type-rangeerror-{timestamp}'.
+ *   Example Usage: Array index out of bounds.
+ *
+ * - 'URIError': URI-related errors.
+ *   Identifiers: lowercase: 'urierror', camelCase: 'uriError', snake_case: 'uri_error', ALL_CAP: 'URIERROR', cache key: 'type:urierror:errId'.
+ *   Model Identifier Format: 'type-urierror-{timestamp}'.
+ *   Example Usage: Malformed URI in API calls.
+ */
+type ErrorTypeTaxonomy = CoreErrorType | CustomErrorType;
+type CoreErrorType = 'TypeError' | 'SyntaxError' | 'ReferenceError' | 'RangeError' | 'URIError';
+type CustomErrorType = string & { __type?: 'CustomErrorType' };
+
+/**
+ * Union type representing ErrorMethodTaxonomy in the DOMSpec ecosystem.
+ * Defines HTTP methods for error context in @dndhub/error.
+ *
+ * - 'GET': HTTP GET request.
+ *   Classifications: HTTP/1.1 (RFC 7231).
+ *   Identifiers: lowercase: 'get', camelCase: 'getMethod', snake_case: 'get_method', ALL_CAP: 'GET', cache key: 'method:get:errId'.
+ *   Model Identifier Format: 'method-get-{timestamp}'.
+ *   Example Usage: GET request errors in FetchrRequest.
+ *
+ * - 'POST': HTTP POST request.
+ *   Identifiers: lowercase: 'post', camelCase: 'postMethod', snake_case: 'post_method', ALL_CAP: 'POST', cache key: 'method:post:errId'.
+ *   Model Identifier Format: 'method-post-{timestamp}'.
+ *   Example Usage: POST request errors in Trakfox forms.
+ *
+ * - 'PUT': HTTP PUT request.
+ *   Identifiers: lowercase: 'put', camelCase: 'putMethod', snake_case: 'put_method', ALL_CAP: 'PUT', cache key: 'method:put:errId'.
+ *   Model Identifier Format: 'method-put-{timestamp}'.
+ *   Example Usage: Update request errors.
+ *
+ * - 'DELETE': HTTP DELETE request.
+ *   Identifiers: lowercase: 'delete', camelCase: 'deleteMethod', snake_case: 'delete_method', ALL_CAP: 'DELETE', cache key: 'method:delete:errId'.
+ *   Model Identifier Format: 'method-delete-{timestamp}'.
+ *   Example Usage: Delete request errors.
+ *
+ * - 'PATCH': HTTP PATCH request.
+ *   Identifiers: lowercase: 'patch', camelCase: 'patchMethod', snake_case: 'patch_method', ALL_CAP: 'PATCH', cache key: 'method:patch:errId'.
+ *   Model Identifier Format: 'method-patch-{timestamp}'.
+ *   Example Usage: Partial update errors.
+ *
+ * - 'HEAD': HTTP HEAD request.
+ *   Identifiers: lowercase: 'head', camelCase: 'headMethod', snake_case: 'head_method', ALL_CAP: 'HEAD', cache key: 'method:head:errId'.
+ *   Model Identifier Format: 'method-head-{timestamp}'.
+ *   Example Usage: Metadata request errors.
+ *
+ * - 'OPTIONS': HTTP OPTIONS request.
+ *   Identifiers: lowercase: 'options', camelCase: 'optionsMethod', snake_case: 'options_method', ALL_CAP: 'OPTIONS', cache key: 'method:options:errId'.
+ *   Model Identifier Format: 'method-options-{timestamp}'.
+ *   Example Usage: CORS preflight errors.
+ *
+ * - 'CONNECT': HTTP CONNECT request.
+ *   Identifiers: lowercase: 'connect', camelCase: 'connectMethod', snake_case: 'connect_method', ALL_CAP: 'CONNECT', cache key: 'method:connect:errId'.
+ *   Model Identifier Format: 'method-connect-{timestamp}'.
+ *   Example Usage: Proxy connection errors.
+ */
+type HttpMethodTaxonomy = CoreHttpMethod | CustomHttpMethod;
+type CoreHttpMethod = 'GET' | 'POST' | 'PUT' | 'DELETE' | 'PATCH' | 'HEAD' | 'OPTIONS' | 'TRACE' | 'CONNECT' | 'COPY' | 'LOCK' | 'MKCOL' | 'MOVE' | 'PURGE' | 'PROPFIND' | 'PROPPATCH' | 'UNLOCK' | 'REPORT' | 'MKACTIVITY' | 'CHECKOUT' | 'MERGE' | 'MSEARCH' | 'NOTIFY' | 'SUBSCRIBE' | 'UNSUBSCRIBE' | 'SEARCH';
+type CustomHttpMethod = string & { __method?: 'CustomHttpMethod' };
+
+/**
+ * Union type representing ErrorContentTypeTaxonomy in the DOMSpec ecosystem.
+ * Defines MIME types for error context in @dndhub/error.
+ *
+ * - 'application/json': JSON data format.
+ *   Classifications: MIME type (RFC 6838).
+ *   Identifiers: lowercase: 'application/json', camelCase: 'jsonContent', snake_case: 'json_content', ALL_CAP: 'APPLICATION_JSON', cache key: 'content:application/json:errId'.
+ *   Model Identifier Format: 'content-json-{timestamp}'.
+ *   Example Usage: JSON API response errors.
+ *
+ * - 'text/html': HTML document.
+ *   Identifiers: lowercase: 'text/html', camelCase: 'htmlContent', snake_case: 'html_content', ALL_CAP: 'TEXT_HTML', cache key: 'content:text/html:errId'.
+ *   Model Identifier Format: 'content-html-{timestamp}'.
+ *   Example Usage: HTML rendering errors in DomsClientError.tsx.
+ *
+ * - 'text/plain': Plain text.
+ *   Identifiers: lowercase: 'text/plain', camelCase: 'plainContent', snake_case: 'plain_content', ALL_CAP: 'TEXT_PLAIN', cache key: 'content:text/plain:errId'.
+ *   Model Identifier Format: 'content-plain-{timestamp}'.
+ *   Example Usage: Plain text error messages.
+ *
+ * - 'application/xml': XML data format.
+ *   Identifiers: lowercase: 'application/xml', camelCase: 'xmlContent', snake_case: 'xml_content', ALL_CAP: 'APPLICATION_XML', cache key: 'content:application/xml:errId'.
+ *   Model Identifier Format: 'content-xml-{timestamp}'.
+ *   Example Usage: XML API errors.
+ *
+ * - 'multipart/form-data': Form data uploads.
+ *   Identifiers: lowercase: 'multipart/form-data', camelCase: 'formDataContent', snake_case: 'form_data_content', ALL_CAP: 'MULTIPART_FORM_DATA', cache key: 'content:multipart/form-data:errId'.
+ *   Model Identifier Format: 'content-form-data-{timestamp}'.
+ *   Example Usage: Form submission errors in Trakfox.
+ */
+export type ErrorContentTypeTaxonomy = CoreErrorContentType | CustomErrorContentType;
+export type CoreErrorContentType = 'application/json' | 'text/html' | 'text/plain' | 'application/xml' | 'multipart/form-data' | 'application/pdf' | 'application/octet-stream' | 'image/jpeg' | 'image/png' | 'application/javascript' | 'text/css' | 'image/gif' | 'application/zip' | 'audio/mpeg' | 'video/mp4' | 'text/xml' | 'application/x-www-form-urlencoded' | 'application/gzip' | 'application/vnd.ms-excel';
+export type CustomErrorContentType = string & { __contentType?: 'CustomErrorContentType' };
+
+/**
+ * Union type representing ErrorDeviceTypeTaxonomy in the DOMSpec ecosystem.
+ * Defines device types for error context in @dndhub/error.
+ *
+ * - 'mobile': Mobile devices.
+ * Classifications: W3C Device Detection.
+ * Identifiers: lowercase: 'mobile', camelCase: 'mobileDevice', snake_case: 'mobile_device', ALL_CAP: 'MOBILE', cache key: 'device:mobile:errId'.
+ * Model Identifier Format: 'device-mobile-{timestamp}'.
+ * Example Usage: Mobile errors in DomsClientError.tsx.
+ *
+ * - 'desktop': Desktop devices.
+ * Identifiers: lowercase: 'desktop', camelCase: 'desktopDevice', snake_case: 'desktop_device', ALL_CAP: 'DESKTOP', cache key: 'device:desktop:errId'.
+ * Model Identifier Format: 'device-desktop-{timestamp}'.
+ * Example Usage: Desktop browser errors.
+ *
+ * - 'tablet': Tablet devices.
+ * Identifiers: lowercase: 'tablet', camelCase: 'tabletDevice', snake_case: 'tablet_device', ALL_CAP: 'TABLET', cache key: 'device:tablet:errId'.
+ * Model Identifier Format: 'device-tablet-{timestamp}'.
+ * Example Usage: Tablet-specific errors.
+ *
+ * - 'smarttv': Smart TV devices.
+ * Identifiers: lowercase: 'smarttv', camelCase: 'smartTv', snake_case: 'smart_tv', ALL_CAP: 'SMARTTV', cache key: 'device:smarttv:errId'.
+ * Model Identifier Format: 'device-smarttv-{timestamp}'.
+ * Example Usage: Errors on TV operating systems.
+ *
+ * - 'wearable': Wearable devices.
+ * Identifiers: lowercase: 'wearable', camelCase: 'wearableDevice', snake_case: 'wearable_device', ALL_CAP: 'WEARABLE', cache key: 'device:wearable:errId'.
+ * Model Identifier Format: 'device-wearable-{timestamp}'.
+ * Example Usage: Errors from smartwatches or fitness trackers.
+ *
+ * - 'console': Gaming consoles.
+ * Identifiers: lowercase: 'console', camelCase: 'gamingConsole', snake_case: 'gaming_console', ALL_CAP: 'CONSOLE', cache key: 'device:console:errId'.
+ * Model Identifier Format: 'device-console-{timestamp}'.
+ * Example Usage: Errors on game consoles like PlayStation or Xbox.
+ *
+ * - 'embedded': Embedded systems.
+ * Identifiers: lowercase: 'embedded', camelCase: 'embeddedSystem', snake_case: 'embedded_system', ALL_CAP: 'EMBEDDED', cache key: 'device:embedded:errId'.
+ * Model Identifier Format: 'device-embedded-{timestamp}'.
+ * Example Usage: Errors in IoT devices or kiosks.
+ *
+ * - 'other': Generic other devices.
+ * Identifiers: lowercase: 'other', camelCase: 'otherDevice', snake_case: 'other_device', ALL_CAP: 'OTHER', cache key: 'device:other:errId'.
+ * Model Identifier Format: 'device-other-{timestamp}'.
+ * Example Usage: Devices that don't fit into other categories.
+ *
+ * - 'unknown': Undetectable or unknown devices.
+ * Identifiers: lowercase: 'unknown', camelCase: 'unknownDevice', snake_case: 'unknown_device', ALL_CAP: 'UNKNOWN', cache key: 'device:unknown:errId'.
+ * Model Identifier Format: 'device-unknown-{timestamp}'.
+ * Example Usage: When device type detection fails.
+ */
+type DeviceTypeTaxonomy = CoreDeviceType | CustomDeviceType;
+type CoreDeviceType = 'mobile' | 'desktop' | 'tablet' | 'smarttv' | 'wearable' | 'console' | 'embedded' | 'other' | 'unknown';
+type CustomDeviceType = string & { __deviceType?: 'CustomDeviceType' };
+
+/**
+ * Union type representing CIEnvironmentTaxonomy in the DOMSpec ecosystem.
+ * Defines deployment environments for error context in @dndhub/error and broader web applications.
+ * Supports multi-environment setups, distinguishing from non-web (e.g., climate) contexts with 'Web' prefix.
+ *
+ * - 'dev': Development environment alias.
+ *   Classifications: Node.js environment standards.
+ *   Identifiers: lowercase: 'dev', camelCase: 'devEnvironment', snake_case: 'dev_environment', ALL_CAP: 'DEV', cache key: 'env:dev:errId'.
+ *   Model Identifier Format: 'env-dev-{timestamp}'.
+ *   Variations and Use Cases: Used as shorthand for development; common in local dev setups with hot reloading.
+ *   Example Usage: Local dev errors in DomsClientError.tsx for quick iteration.
+ *
+ * - 'prod': Production environment alias.
+ *   Identifiers: lowercase: 'prod', camelCase: 'prodEnvironment', snake_case: 'prod_environment', ALL_CAP: 'PROD', cache key: 'env:prod:errId'.
+ *   Model Identifier Format: 'env-prod-{timestamp}'.
+ *   Variations and Use Cases: Shorthand for production; used in CI/CD pipelines for live deployments.
+ *   Example Usage: Production errors in DndCoLab with optimized builds.
+ *
+ * - 'development': Full development environment.
+ *   Classifications: Node.js environment standards.
+ *   Identifiers: lowercase: 'development', camelCase: 'developmentEnvironment', snake_case: 'development_environment', ALL_CAP: 'DEVELOPMENT', cache key: 'env:development:errId'.
+ *   Model Identifier Format: 'env-development-{timestamp}'.
+ *   Variations and Use Cases: Used for full dev mode with debugging tools; supports hot module replacement.
+ *   Example Usage: Development errors in DomsError.ts with verbose logging.
+ *
+ * - 'production': Full production environment.
+ *   Identifiers: lowercase: 'production', camelCase: 'productionEnvironment', snake_case: 'production_environment', ALL_CAP: 'PRODUCTION', cache key: 'env:production:errId'.
+ *   Model Identifier Format: 'env-production-{timestamp}'.
+ *   Variations and Use Cases: Optimized for performance; minified assets and reduced logging.
+ *   Example Usage: Production errors in DndCoLab with error throttling.
+ *
+ * - 'staging': Staging environment for pre-production testing.
+ *   Identifiers: lowercase: 'staging', camelCase: 'stagingEnvironment', snake_case: 'staging_environment', ALL_CAP: 'STAGING', cache key: 'env:staging:errId'.
+ *   Model Identifier Format: 'env-staging-{timestamp}'.
+ *   Variations and Use Cases: Mirrors production for QA; used for integration testing before release.
+ *   Example Usage: Staging deployment errors in ErrorManager.ts.
+ *
+ * - 'test': Testing environment for unit/integration tests.
+ *   Identifiers: lowercase: 'test', camelCase: 'testEnvironment', snake_case: 'test_environment', ALL_CAP: 'TEST', cache key: 'env:test:errId'.
+ *   Model Identifier Format: 'env-test-{timestamp}'.
+ *   Variations and Use Cases: Isolated for automated tests; mocks external services.
+ *   Example Usage: Test errors in Jest/Vitest setups within DomsError.ts.
+ *
+ * - 'qa': Quality Assurance environment.
+ *   Identifiers: lowercase: 'qa', camelCase: 'qaEnvironment', snake_case: 'qa_environment', ALL_CAP: 'QA', cache key: 'env:qa:errId'.
+ *   Model Identifier Format: 'env-qa-{timestamp}'.
+ *   Variations and Use Cases: Dedicated for manual QA testing; similar to staging but with test data.
+ *   Example Usage: QA-specific errors in fluxr integrations during manual reviews.
+ *
+ * - 'beta': Beta testing environment for early adopters.
+ *   Identifiers: lowercase: 'beta', camelCase: 'betaEnvironment', snake_case: 'beta_environment', ALL_CAP: 'BETA', cache key: 'env:beta:errId'.
+ *   Model Identifier Format: 'env-beta-{timestamp}'.
+ *   Variations and Use Cases: Used for community beta features; tracks experimental errors.
+ *   Example Usage: Beta errors in DndCoLab features via DomsClientError.tsx.
+ *
+ * - 'canary': Canary release environment for gradual rollouts.
+ *   Identifiers: lowercase: 'canary', camelCase: 'canaryEnvironment', snake_case: 'canary_environment', ALL_CAP: 'CANARY', cache key: 'env:canary:errId'.
+ *   Model Identifier Format: 'env-canary-{timestamp}'.
+ *   Variations and Use Cases: Limited traffic for new features; monitors for issues before full prod.
+ *   Example Usage: Canary deployment errors in Vercel KV storage.
+ *
+ * - 'local': Local machine environment.
+ *   Identifiers: lowercase: 'local', camelCase: 'localEnvironment', snake_case: 'local_environment', ALL_CAP: 'LOCAL', cache key: 'env:local:errId'.
+ *   Model Identifier Format: 'env-local-{timestamp}'.
+ *   Variations and Use Cases: Used for offline/local dev; no network dependencies.
+ *   Example Usage: Local errors in DomsError.ts during offline testing.
+ *
+ * - 'sandbox': Isolated sandbox environment.
+ *   Identifiers: lowercase: 'sandbox', camelCase: 'sandboxEnvironment', snake_case: 'sandbox_environment', ALL_CAP: 'SANDBOX', cache key: 'env:sandbox:errId'.
+ *   Model Identifier Format: 'env-sandbox-{timestamp}'.
+ *   Variations and Use Cases: Used for safe experimentation; restricted access.
+ *   Example Usage: Sandbox iframe errors in DomsClientError.tsx.
+ *
+ * - 'preview': Preview environment for PR builds.
+ *   Identifiers: lowercase: 'preview', camelCase: 'previewEnvironment', snake_case: 'preview_environment', ALL_CAP: 'PREVIEW', cache key: 'env:preview:errId'.
+ *   Model Identifier Format: 'env-preview-{timestamp}'.
+ *   Variations and Use Cases: Auto-generated for pull requests; used in CI/CD previews.
+ *   Example Usage: Preview errors in Vercel deployments for PR reviews.
+ */
+export type CIEnvironmentTaxonomy = CoreCIEnvironment | CustomCIEnvironment;
+export type CoreCIEnvironment = 'dev' | 'prod' | 'development' | 'production' | 'staging' | 'test' | 'qa' | 'beta' | 'canary' | 'local' | 'sandbox' | 'preview';
+export type CustomCIEnvironment = string & { __environment?: 'CustomCIEnvironment' };
+
+/**
+ * Union type representing ErrorColorTaxonomy in the DOMSpec ecosystem.
+ * Defines predefined hex/rgb/name values for severity indicators in @dndhub/error UI rendering.
+ * Tied to ErrorSeverityTaxonomy: Each color maps to a severity level for visual consistency (e.g., '#FF0000' for 'critical').
+ *
+ * - '#FF0000': Red for critical/fatal errors.
+ *   Classifications: UI color standards (Tailwind 'red-500').
+ *   Identifiers: lowercase: '#ff0000', camelCase: 'redCritical', snake_case: 'red_critical', ALL_CAP: 'RED_CRITICAL', cache key: 'color:#ff0000:errId'.
+ *   Model Identifier Format: 'color-red-critical-{timestamp}'.
+ *   Variations and Use Cases: Hex format; used for high-severity UI alerts (severity: 'critical', 'fatal'). Supports rgb(255,0,0) equivalent.
+ *   Example Usage: ErrorBoundary.tsx rendering critical errors with red background.
+ *
+ * - '#FFA500': Orange for high/warn errors.
+ *   Classifications: UI color standards (Tailwind 'orange-500').
+ *   Identifiers: lowercase: '#ffa500', camelCase: 'orangeHigh', snake_case: 'orange_high', ALL_CAP: 'ORANGE_HIGH', cache key: 'color:#ffa500:errId'.
+ *   Model Identifier Format: 'color-orange-high-{timestamp}'.
+ *   Variations and Use Cases: Hex format; for urgent recoverable issues (severity: 'high', 'warn'). RGB: rgb(255,165,0).
+ *   Example Usage: DomsClientError.tsx highlighting warn errors in orange.
+ *
+ * - '#FFFF00': Yellow for medium/info errors.
+ *   Classifications: UI color standards (Tailwind 'yellow-500').
+ *   Identifiers: lowercase: '#ffff00', camelCase: 'yellowMedium', snake_case: 'yellow_medium', ALL_CAP: 'YELLOW_MEDIUM', cache key: 'color:#ffff00:errId'.
+ *   Model Identifier Format: 'color-yellow-medium-{timestamp}'.
+ *   Variations and Use Cases: Hex format; for operational notices (severity: 'medium', 'info'). RGB: rgb(255,255,0).
+ *   Example Usage: Console warnings in yellow for info logs in DomsError.ts.
+ *
+ * - '#008000': Green for low/success notices.
+ *   Classifications: UI color standards (Tailwind 'green-500').
+ *   Identifiers: lowercase: '#008000', camelCase: 'greenLow', snake_case: 'green_low', ALL_CAP: 'GREEN_LOW', cache key: 'color:#008000:errId'.
+ *   Model Identifier Format: 'color-green-low-{timestamp}'.
+ *   Variations and Use Cases: Hex format; for minor issues or success (severity: 'low', 'notice'). RGB: rgb(0,128,0).
+ *   Example Usage: Success banners in green for low-priority events in UI.
+ *
+ * - '#0000FF': Blue for debug/trace logs.
+ *   Classifications: UI color standards (Tailwind 'blue-500').
+ *   Identifiers: lowercase: '#0000ff', camelCase: 'blueDebug', snake_case: 'blue_debug', ALL_CAP: 'BLUE_DEBUG', cache key: 'color:#0000ff:errId'.
+ *   Model Identifier Format: 'color-blue-debug-{timestamp}'.
+ *   Variations and Use Cases: Hex format; for developer tracing (severity: 'debug', 'trace'). RGB: rgb(0,0,255).
+ *   Example Usage: Debug stack traces in blue in DomsError.ts.
+ *
+ * - '#808080': Gray for deprecation/maintenance.
+ *   Classifications: UI color standards (Tailwind 'gray-500').
+ *   Identifiers: lowercase: '#808080', camelCase: 'grayDeprecation', snake_case: 'gray_deprecation', ALL_CAP: 'GRAY_DEPRECATION', cache key: 'color:#808080:errId'.
+ *   Model Identifier Format: 'color-gray-deprecation-{timestamp}'.
+ *   Variations and Use Cases: Hex format; for warnings/notifications (severity: 'deprecation', 'maintenance'). RGB: rgb(128,128,128).
+ *   Example Usage: Deprecation notices in gray in DomsRouteError.tsx.
+ *
+ * - '#800080': Purple for security/compliance issues.
+ *   Classifications: UI color standards (Tailwind 'purple-500').
+ *   Identifiers: lowercase: '#800080', camelCase: 'purpleSecurity', snake_case: 'purple_security', ALL_CAP: 'PURPLE_SECURITY', cache key: 'color:#800080:errId'.
+ *   Model Identifier Format: 'color-purple-security-{timestamp}'.
+ *   Variations and Use Cases: Hex format; for security alerts (severity: 'fraud', 'hacking', 'brutal', 'compliance'). RGB: rgb(128,0,128).
+ *   Example Usage: Security errors in purple via securityAnalyzer in DomsError.ts.
+ *
+ * - '#00FFFF': Cyan for experimental/update alerts.
+ *   Classifications: UI color standards (Tailwind 'cyan-500').
+ *   Identifiers: lowercase: '#00ffff', camelCase: 'cyanExperimental', snake_case: 'cyan_experimental', ALL_CAP: 'CYAN_EXPERIMENTAL', cache key: 'color:#00ffff:errId'.
+ *   Model Identifier Format: 'color-cyan-experimental-{timestamp}'.
+ *   Variations and Use Cases: Hex format; for beta features (severity: 'experimental', 'update'). RGB: rgb(0,255,255).
+ *   Example Usage: Experimental feature alerts in cyan in DndCoLab integrations.
+ *
+ * - '#000000': Black for unknown/expired errors.
+ *   Classifications: UI color standards (Tailwind 'black').
+ *   Identifiers: lowercase: '#000000', camelCase: 'blackUnknown', snake_case: 'black_unknown', ALL_CAP: 'BLACK_UNKNOWN', cache key: 'color:#000000:errId'.
+ *   Model Identifier Format: 'color-black-unknown-{timestamp}'.
+ *   Variations and Use Cases: Hex format; for fallback/unclassified (severity: 'expired', default unknown). RGB: rgb(0,0,0).
+ *   Example Usage: Expired session errors in black in authentication flows.
+ */
+export type ErrorColorTaxonomy = CoreErrorColor | CustomErrorColor;
+export type CoreErrorColor = '#FF0000' | '#FFA500' | '#FFFF00' | '#008000' | '#0000FF' | '#808080' | '#800080' | '#00FFFF' | '#000000';
+export type CustomErrorColor = string & { __color?: 'CustomErrorColor' };
+
+/**
+ * Union type representing FeatureTaxonomy in the DOMSpec ecosystem.
+ * Defines standardized feature names for modular tracking in @dndhub/error and DndHub ecosystem.
+ * Enables categorization of errors by feature for better analytics and debugging.
+ *
+ * - 'authentication': Authentication-related features.
+ *   Classifications: OAuth/JWT standards.
+ *   Identifiers: lowercase: 'authentication', camelCase: 'authFeature', snake_case: 'auth_feature', ALL_CAP: 'AUTHENTICATION', cache key: 'feature:authentication:errId'.
+ *   Model Identifier Format: 'feature-auth-{timestamp}'.
+ *   Variations and Use Cases: Used for login/token handling; errors like invalid credentials.
+ *   Example Usage: Auth errors in DomsError.ts for DndCoLab sessions.
+ *
+ * - 'routing': Routing and navigation features.
+ *   Classifications: Next.js routing.
+ *   Identifiers: lowercase: 'routing', camelCase: 'routingFeature', snake_case: 'routing_feature', ALL_CAP: 'ROUTING', cache key: 'feature:routing:errId'.
+ *   Model Identifier Format: 'feature-routing-{timestamp}'.
+ *   Variations and Use Cases: Used for dynamic routes; errors in path resolution.
+ *   Example Usage: Routing errors in DomsRouteError.tsx.
+ *
+ * - 'storage': Data storage and persistence features.
+ *   Classifications: Supabase/Vercel KV standards.
+ *   Identifiers: lowercase: 'storage', camelCase: 'storageFeature', snake_case: 'storage_feature', ALL_CAP: 'STORAGE', cache key: 'feature:storage:errId'.
+ *   Model Identifier Format: 'feature-storage-{timestamp}'.
+ *   Variations and Use Cases: Used for database/caching; errors in queries or sessions.
+ *   Example Usage: Storage errors in fluxr integrations.
+ *
+ * - 'ui': User interface rendering features.
+ *   Classifications: React/Tailwind standards.
+ *   Identifiers: lowercase: 'ui', camelCase: 'uiFeature', snake_case: 'ui_feature', ALL_CAP: 'UI', cache key: 'feature:ui:errId'.
+ *   Model Identifier Format: 'feature-ui-{timestamp}'.
+ *   Variations and Use Cases: Used for component rendering; errors in hydration or state.
+ *   Example Usage: UI errors in ErrorBoundary.tsx.
+ *
+ * - 'security': Security and compliance features.
+ *   Classifications: OWASP/NIST standards.
+ *   Identifiers: lowercase: 'security', camelCase: 'securityFeature', snake_case: 'security_feature', ALL_CAP: 'SECURITY', cache key: 'feature:security:errId'.
+ *   Model Identifier Format: 'feature-security-{timestamp}'.
+ *   Variations and Use Cases: Used for threat detection; errors in authz or encryption.
+ *   Example Usage: Security errors via securityAnalyzer in DomsError.ts.
+ *
+ * - 'integration': Third-party integration features.
+ *   Classifications: API/Webhook standards.
+ *   Identifiers: lowercase: 'integration', camelCase: 'integrationFeature', snake_case: 'integration_feature', ALL_CAP: 'INTEGRATION', cache key: 'feature:integration:errId'.
+ *   Model Identifier Format: 'feature-integration-{timestamp}'.
+ *   Variations and Use Cases: Used for external services; errors in API calls.
+ *   Example Usage: Integration errors in HealthOrb DHIS2 via fluxr.
+ *
+ * - 'performance': Performance optimization features.
+ *   Classifications: Web Vitals standards.
+ *   Identifiers: lowercase: 'performance', camelCase: 'performanceFeature', snake_case: 'performance_feature', ALL_CAP: 'PERFORMANCE', cache key: 'feature:performance:errId'.
+ *   Model Identifier Format: 'feature-performance-{timestamp}'.
+ *   Variations and Use Cases: Used for metrics/logging; errors in load times.
+ *   Example Usage: Performance errors in DomsError.ts monitoring.
+ *
+ * - 'analytics': Analytics and tracking features.
+ *   Classifications: Google Analytics standards.
+ *   Identifiers: lowercase: 'analytics', camelCase: 'analyticsFeature', snake_case: 'analytics_feature', ALL_CAP: 'ANALYTICS', cache key: 'feature:analytics:errId'.
+ *   Model Identifier Format: 'feature-analytics-{timestamp}'.
+ *   Variations and Use Cases: Used for event tracking; errors in data collection.
+ *   Example Usage: Analytics errors in DndCoLab tracking.
+ */
+export type ErrorFeatureTaxonomy = CoreErrorFeature | CustomErrorFeature;
+export type CoreErrorFeature = 'authentication' | 'routing' | 'storage' | 'ui' | 'security' | 'integration' | 'performance' | 'analytics';
+export type CustomErrorFeature = string & { __feature?: 'CustomErrorFeature' };
+
+/**
+ * Union type representing ErrorTestTypeTaxonomy in the DOMSpec ecosystem.
+ * Defines JavaScript error types for @dndhub/error.
+ *
+ * - 'Error': The base error type.
+ * Classifications: ECMAScript standard.
+ * Identifiers: lowercase: 'error', camelCase: 'error', snake_case: 'error', ALL_CAP: 'ERROR', cache key: 'type:error:errId'.
+ * Model Identifier Format: 'type-error-{timestamp}'.
+ * Example Usage: A generic error.
+ *
+ * - 'TypeError': Type-related errors.
+ * Classifications: ECMAScript standard.
+ * Identifiers: lowercase: 'typeerror', camelCase: 'typeError', snake_case: 'type_error', ALL_CAP: 'TYPEERROR', cache key: 'type:typeerror:errId'.
+ * Model Identifier Format: 'type-typeerror-{timestamp}'.
+ * Example Usage: Invalid type in DomsError.ts.
+ *
+ * - 'SyntaxError': Syntax-related errors.
+ * Identifiers: lowercase: 'syntaxerror', camelCase: 'syntaxError', snake_case: 'syntax_error', ALL_CAP: 'SYNTAXERROR', cache key: 'type:syntaxerror:errId'.
+ * Model Identifier Format: 'type-syntaxerror-{timestamp}'.
+ * Example Usage: JSON parsing errors.
+ *
+ * - 'ReferenceError': Reference-related errors.
+ * Identifiers: lowercase: 'referenceerror', camelCase: 'referenceError', snake_case: 'reference_error', ALL_CAP: 'REFERENCEERROR', cache key: 'type:referenceerror:errId'.
+ * Model Identifier Format: 'type-referenceerror-{timestamp}'.
+ * Example Usage: Undefined variable errors.
+ *
+ * - 'RangeError': Range-related errors.
+ * Identifiers: lowercase: 'rangeerror', camelCase: 'rangeError', snake_case: 'range_error', ALL_CAP: 'RANGEERROR', cache key: 'type:rangeerror:errId'.
+ * Model Identifier Format: 'type-rangeerror-{timestamp}'.
+ * Example Usage: Array index out of bounds.
+ *
+ * - 'EvalError': Errors regarding the global `eval()` function.
+ * Classifications: ECMAScript standard.
+ * Identifiers: lowercase: 'evalerror', camelCase: 'evalError', snake_case: 'eval_error', ALL_CAP: 'EVALERROR', cache key: 'type:evalerror:errId'.
+ * Model Identifier Format: 'type-evalerror-{timestamp}'.
+ * Example Usage: A misuse of `eval()`.
+ *
+ * - 'URIError': URI-related errors.
+ * Identifiers: lowercase: 'urierror', camelCase: 'uriError', snake_case: 'uri_error', ALL_CAP: 'URIERROR', cache key: 'type:urierror:errId'.
+ * Model Identifier Format: 'type-urierror-{timestamp}'.
+ * Example Usage: Malformed URI in API calls.
+ *
+ * - 'AggregateError': Represents multiple errors wrapped in a single error object.
+ * Classifications: ECMAScript standard.
+ * Identifiers: lowercase: 'aggregateerror', camelCase: 'aggregateError', snake_case: 'aggregate_error', ALL_CAP: 'AGGREGATEERROR', cache key: 'type:aggregateerror:errId'.
+ * Model Identifier Format: 'type-aggregateerror-{timestamp}'.
+ * Example Usage: Errors from multiple asynchronous operations.
+ *
+ */
+export type ErrorTestTypeTaxonomy = CoreErrorTestType | CustomErrorTestType;
+export type CoreErrorTestType = 'Error'| 'TypeError' | 'SyntaxError' | 'ReferenceError' | 'RangeError' | 'EvalError' | 'URIError' | 'AggregateError';
+export type CustomErrorTestType = string & { __type?: 'CustomErrorTestType' };
+
+/**
+ * Union type representing HeaderKeyTaxonomy in the DOMSpec ecosystem.
+ * Defines common HTTP header keys for error context in @dndhub/error headers prop.
+ * Supports standardization of headers like 'Content-Type' for FetchrRequest analysis.
+ *
+ * - 'Content-Type': Specifies the media type of the resource.
+ *   Classifications: HTTP/1.1 (RFC 7231).
+ *   Identifiers: lowercase: 'content-type', camelCase: 'contentType', snake_case: 'content_type', ALL_CAP: 'CONTENT_TYPE', cache key: 'header:content-type:errId'.
+ *   Model Identifier Format: 'header-content-type-{timestamp}'.
+ *   Variations and Use Cases: Used to indicate MIME types (e.g., 'application/json'); errors in mismatched types.
+ *   Example Usage: Content-Type errors in FetchrRequest parsing via DomsError.ts.
+ *
+ * - 'Authorization': Carries credentials for authentication.
+ *   Classifications: HTTP/1.1 (RFC 7235).
+ *   Identifiers: lowercase: 'authorization', camelCase: 'authorization', snake_case: 'authorization', ALL_CAP: 'AUTHORIZATION', cache key: 'header:authorization:errId'.
+ *   Model Identifier Format: 'header-authorization-{timestamp}'.
+ *   Variations and Use Cases: Used for Bearer/JWT tokens; errors in invalid auth headers.
+ *   Example Usage: Auth header errors in securityAnalyzer for DndCoLab.
+ *
+ * - 'Accept': Specifies acceptable media types for response.
+ *   Classifications: HTTP/1.1 (RFC 7231).
+ *   Identifiers: lowercase: 'accept', camelCase: 'accept', snake_case: 'accept', ALL_CAP: 'ACCEPT', cache key: 'header:accept:errId'.
+ *   Model Identifier Format: 'header-accept-{timestamp}'.
+ *   Variations and Use Cases: Used in content negotiation; errors in unsupported types.
+ *   Example Usage: Accept header mismatches in API requests.
+ *
+ * - 'User-Agent': Identifies the client software.
+ *   Classifications: HTTP/1.1 (RFC 7231).
+ *   Identifiers: lowercase: 'user-agent', camelCase: 'userAgent', snake_case: 'user_agent', ALL_CAP: 'USER_AGENT', cache key: 'header:user-agent:errId'.
+ *   Model Identifier Format: 'header-user-agent-{timestamp}'.
+ *   Variations and Use Cases: Used for device/browser detection; errors in spoofed agents.
+ *   Example Usage: User-Agent errors in deviceFingerprint analysis.
+ *
+ * - 'Origin': Indicates the origin of the request.
+ *   Classifications: CORS (RFC 6454).
+ *   Identifiers: lowercase: 'origin', camelCase: 'origin', snake_case: 'origin', ALL_CAP: 'ORIGIN', cache key: 'header:origin:errId'.
+ *   Model Identifier Format: 'header-origin-{timestamp}'.
+ *   Variations and Use Cases: Used in CORS checks; errors in cross-origin requests.
+ *   Example Usage: Origin header errors in CORS preflights.
+ *
+ * - 'Referer': Indicates the previous URL.
+ *   Classifications: HTTP/1.1 (RFC 7231).
+ *   Identifiers: lowercase: 'referer', camelCase: 'referer', snake_case: 'referer', ALL_CAP: 'REFERER', cache key: 'header:referer:errId'.
+ *   Model Identifier Format: 'header-referer-{timestamp}'.
+ *   Variations and Use Cases: Used for tracking referrals; errors in referral policies.
+ *   Example Usage: Referer header issues in navigation errors.
+ *
+ * - 'X-Forwarded-For': Identifies originating IP in proxies.
+ *   Classifications: Proxy standards.
+ *   Identifiers: lowercase: 'x-forwarded-for', camelCase: 'xForwardedFor', snake_case: 'x_forwarded_for', ALL_CAP: 'X_FORWARDED_FOR', cache key: 'header:x-forwarded-for:errId'.
+ *   Model Identifier Format: 'header-x-forwarded-for-{timestamp}'.
+ *   Variations and Use Cases: Used in load balancers; errors in IP spoofing.
+ *   Example Usage: Proxy IP errors in ipAddress context.
+ *
+ * - 'Cache-Control': Controls caching mechanisms.
+ *   Classifications: HTTP/1.1 (RFC 7234).
+ *   Identifiers: lowercase: 'cache-control', camelCase: 'cacheControl', snake_case: 'cache_control', ALL_CAP: 'CACHE_CONTROL', cache key: 'header:cache-control:errId'.
+ *   Model Identifier Format: 'header-cache-control-{timestamp}'.
+ *   Variations and Use Cases: Used for no-cache directives; errors in stale data.
+ *   Example Usage: Cache header errors in fluxr caching.
+ *
+ * - 'If-Modified-Since': Conditional request for modified resources.
+ *   Classifications: HTTP/1.1 (RFC 7232).
+ *   Identifiers: lowercase: 'if-modified-since', camelCase: 'ifModifiedSince', snake_case: 'if_modified_since', ALL_CAP: 'IF_MODIFIED_SINCE', cache key: 'header:if-modified-since:errId'.
+ *   Model Identifier Format: 'header-if-modified-since-{timestamp}'.
+ *   Variations and Use Cases: Used for conditional GET; errors in 304 Not Modified.
+ *   Example Usage: Conditional request errors in API calls.
+ *
+ * - 'Accept-Language': Preferred languages for response.
+ *   Classifications: HTTP/1.1 (RFC 7231).
+ *   Identifiers: lowercase: 'accept-language', camelCase: 'acceptLanguage', snake_case: 'accept_language', ALL_CAP: 'ACCEPT_LANGUAGE', cache key: 'header:accept-language:errId'.
+ *   Model Identifier Format: 'header-accept-language-{timestamp}'.
+ *   Variations and Use Cases: Used for localization; errors in unsupported languages.
+ *   Example Usage: Language header errors in internationalized apps.
+ */
+export type HeaderKeyTaxonomy = CoreHeaderKey | CustomHeaderKey;
+export type CoreHeaderKey = 'Content-Type' | 'Authorization' | 'Accept' | 'User-Agent' | 'Origin' | 'Referer' | 'X-Forwarded-For' | 'Cache-Control' | 'If-Modified-Since' | 'Accept-Language';
+export type CustomHeaderKey = string & { __headerKey?: 'CustomHeaderKey' };
+
+/**
+ * Union type representing IpTypeTaxonomy in the DOMSpec ecosystem.
+ * Defines IP address types for error context in @dndhub/error ipAddress prop.
+ * Supports IPv4/IPv6 classification with expansions for proxy/Tor detection.
+ *
+ * - 'IPv4': Internet Protocol version 4 address.
+ *   Classifications: RFC 791.
+ *   Identifiers: lowercase: 'ipv4', camelCase: 'ipv4Type', snake_case: 'ipv4_type', ALL_CAP: 'IPV4', cache key: 'ip:type:ipv4:errId'.
+ *   Model Identifier Format: 'ip-type-ipv4-{timestamp}'.
+ *   Variations and Use Cases: Standard 32-bit addresses (e.g., 192.168.0.1); used for legacy networks. In ipAddress, combines with isProxy/isTor flags.
+ *   Example Usage: IPv4 detection in ipAddress context for securityAnalyzer.
+ *
+ * - 'IPv6': Internet Protocol version 6 address.
+ *   Classifications: RFC 8200.
+ *   Identifiers: lowercase: 'ipv6', camelCase: 'ipv6Type', snake_case: 'ipv6_type', ALL_CAP: 'IPV6', cache key: 'ip:type:ipv6:errId'.
+ *   Model Identifier Format: 'ip-type-ipv6-{timestamp}'.
+ *   Variations and Use Cases: 128-bit addresses (e.g., 2001:db8::1); for modern, scalable networks. Supports dual-stack with IPv4.
+ *   Example Usage: IPv6 errors in network category via DomsError.ts.
+ *
+ * - 'IPv4-mapped': IPv4-mapped IPv6 address.
+ *   Classifications: RFC 4291.
+ *   Identifiers: lowercase: 'ipv4-mapped', camelCase: 'ipv4Mapped', snake_case: 'ipv4_mapped', ALL_CAP: 'IPV4_MAPPED', cache key: 'ip:type:ipv4-mapped:errId'.
+ *   Model Identifier Format: 'ip-type-ipv4-mapped-{timestamp}'.
+ *   Variations and Use Cases: Embeds IPv4 in IPv6 (e.g., ::ffff:192.168.0.1); for transition mechanisms.
+ *   Example Usage: Mapped IP detection in fluxr network drivers.
+ *
+ * - 'IPv6-link-local': Link-local IPv6 address.
+ *   Classifications: RFC 4291.
+ *   Identifiers: lowercase: 'ipv6-link-local', camelCase: 'ipv6LinkLocal', snake_case: 'ipv6_link_local', ALL_CAP: 'IPV6_LINK_LOCAL', cache key: 'ip:type:ipv6-link-local:errId'.
+ *   Model Identifier Format: 'ip-type-ipv6-link-local-{timestamp}'.
+ *   Variations and Use Cases: fe80:: prefix for local links; non-routable, used in device comms.
+ *   Example Usage: Local network errors in deviceFingerprint.
+ *
+ * - 'IPv6-unique-local': Unique local IPv6 address.
+ *   Classifications: RFC 4193.
+ *   Identifiers: lowercase: 'ipv6-unique-local', camelCase: 'ipv6UniqueLocal', snake_case: 'ipv6_unique_local', ALL_CAP: 'IPV6_UNIQUE_LOCAL', cache key: 'ip:type:ipv6-unique-local:errId'.
+ *   Model Identifier Format: 'ip-type-ipv6-unique-local-{timestamp}'.
+ *   Variations and Use Cases: fc00::/7 prefix for private networks; site-local alternative.
+ *   Example Usage: Private IP errors in internal routing.
+ */
+export type IpTypeTaxonomy = CoreIpType | CustomIpType;
+export type CoreIpType = 'IPv4' | 'IPv6' | 'IPv4-mapped' | 'IPv6-link-local' | 'IPv6-unique-local';
+export type CustomIpType = string & { __ipType?: 'CustomIpType' };
+
+/**
+ * Union type representing BrowserNameTaxonomy in the DOMSpec ecosystem.
+ * Defines common browser names for deviceFingerprint.browser.name in @dndhub/error.
+ * Supports user agent parsing for error context in browser detection.
+ *
+ * - 'Chrome': Google Chrome browser.
+ *   Classifications: Chromium-based.
+ *   Identifiers: lowercase: 'chrome', camelCase: 'chromeBrowser', snake_case: 'chrome_browser', ALL_CAP: 'CHROME', cache key: 'browser:chrome:errId'.
+ *   Model Identifier Format: 'browser-chrome-{timestamp}'.
+ *   Variations and Use Cases: Desktop/mobile versions; common in web apps. Used with version for specificity.
+ *   Example Usage: Chrome-specific errors in deviceFingerprint analysis.
+ *
+ * - 'Firefox': Mozilla Firefox browser.
+ *   Classifications: Gecko-based.
+ *   Identifiers: lowercase: 'firefox', camelCase: 'firefoxBrowser', snake_case: 'firefox_browser', ALL_CAP: 'FIREFOX', cache key: 'browser:firefox:errId'.
+ *   Model Identifier Format: 'browser-firefox-{timestamp}'.
+ *   Variations and Use Cases: Privacy-focused; errors in extension compatibility.
+ *   Example Usage: Firefox UA errors in DomsClientError.tsx.
+ *
+ * - 'Safari': Apple Safari browser.
+ *   Classifications: WebKit-based.
+ *   Identifiers: lowercase: 'safari', camelCase: 'safariBrowser', snake_case: 'safari_browser', ALL_CAP: 'SAFARI', cache key: 'browser:safari:errId'.
+ *   Model Identifier Format: 'browser-safari-{timestamp}'.
+ *   Variations and Use Cases: iOS/macOS default; errors in PWA support.
+ *   Example Usage: Safari-specific hydration errors in Next.js.
+ *
+ * - 'Edge': Microsoft Edge browser.
+ *   Classifications: Chromium-based.
+ *   Identifiers: lowercase: 'edge', camelCase: 'edgeBrowser', snake_case: 'edge_browser', ALL_CAP: 'EDGE', cache key: 'browser:edge:errId'.
+ *   Model Identifier Format: 'browser-edge-{timestamp}'.
+ *   Variations and Use Cases: Windows default; errors in legacy IE modes.
+ *   Example Usage: Edge UA detection in fluxr integrations.
+ *
+ * - 'Internet Explorer': Legacy Microsoft IE browser.
+ *   Classifications: Trident-based.
+ *   Identifiers: lowercase: 'internet explorer', camelCase: 'ieBrowser', snake_case: 'ie_browser', ALL_CAP: 'INTERNET_EXPLORER', cache key: 'browser:internet explorer:errId'.
+ *   Model Identifier Format: 'browser-ie-{timestamp}'.
+ *   Variations and Use Cases: Deprecated; errors in polyfill requirements.
+ *   Example Usage: IE compatibility errors in DomsError.ts.
+ *
+ * - 'Opera': Opera browser.
+ *   Classifications: Chromium-based.
+ *   Identifiers: lowercase: 'opera', camelCase: 'operaBrowser', snake_case: 'opera_browser', ALL_CAP: 'OPERA', cache key: 'browser:opera:errId'.
+ *   Model Identifier Format: 'browser-opera-{timestamp}'.
+ *   Variations and Use Cases: Mobile/desktop; errors in VPN features.
+ *   Example Usage: Opera UA errors in device context.
+ *
+ * - 'Brave': Brave browser.
+ *   Classifications: Chromium-based.
+ *   Identifiers: lowercase: 'brave', camelCase: 'braveBrowser', snake_case: 'brave_browser', ALL_CAP: 'BRAVE', cache key: 'browser:brave:errId'.
+ *   Model Identifier Format: 'browser-brave-{timestamp}'.
+ *   Variations and Use Cases: Privacy-focused; errors in ad-blocking.
+ *   Example Usage: Brave-specific security errors.
+ *
+ * - 'Vivaldi': Vivaldi browser.
+ *   Classifications: Chromium-based.
+ *   Identifiers: lowercase: 'vivaldi', camelCase: 'vivaldiBrowser', snake_case: 'vivaldi_browser', ALL_CAP: 'VIVALDI', cache key: 'browser:vivaldi:errId'.
+ *   Model Identifier Format: 'browser-vivaldi-{timestamp}'.
+ *   Variations and Use Cases: Customizable UI; errors in tab management.
+ *   Example Usage: Vivaldi UA detection in error logs.
+ */
+export type BrowserNameTaxonomy = CoreBrowserName | CustomBrowserName;
+export type CoreBrowserName = 'chrome' | 'firefox' | 'safari' | 'edge' | 'opera' | 'ie' | 'chromium' | 'electron' | 'brave' | 'vivaldi';
+export type CustomBrowserName = string & { __browserName?: 'CustomBrowserName' };
+
+/**
+ * Union type representing OsNameTaxonomy in the DOMSpec ecosystem.
+ * Defines common operating system names for deviceFingerprint.os.name in @dndhub/error.
+ * Supports user agent parsing for OS detection in error context.
+ *
+ * - 'Windows': Microsoft Windows OS.
+ *   Classifications: Desktop OS.
+ *   Identifiers: lowercase: 'windows', camelCase: 'windowsOs', snake_case: 'windows_os', ALL_CAP: 'WINDOWS', cache key: 'os:windows:errId'.
+ *   Model Identifier Format: 'os-windows-{timestamp}'.
+ *   Variations and Use Cases: Various versions (e.g., 10, 11); common in desktop apps.
+ *   Example Usage: Windows-specific errors in deviceFingerprint.
+ *
+ * - 'macOS': Apple macOS.
+ *   Classifications: Unix-based desktop OS.
+ *   Identifiers: lowercase: 'macos', camelCase: 'macOs', snake_case: 'mac_os', ALL_CAP: 'MACOS', cache key: 'os:macos:errId'.
+ *   Model Identifier Format: 'os-macos-{timestamp}'.
+ *   Variations and Use Cases: Versions like Ventura; errors in Safari integrations.
+ *   Example Usage: macOS UA errors in DomsClientError.tsx.
+ *
+ * - 'Linux': Linux distributions.
+ *   Classifications: Open-source Unix-like OS.
+ *   Identifiers: lowercase: 'linux', camelCase: 'linuxOs', snake_case: 'linux_os', ALL_CAP: 'LINUX', cache key: 'os:linux:errId'.
+ *   Model Identifier Format: 'os-linux-{timestamp}'.
+ *   Variations and Use Cases: Ubuntu/Fedora; server/desktop errors.
+ *   Example Usage: Linux-specific hydration errors in fluxr.
+ *
+ * - 'Android': Google Android OS.
+ *   Classifications: Mobile OS.
+ *   Identifiers: lowercase: 'android', camelCase: 'androidOs', snake_case: 'android_os', ALL_CAP: 'ANDROID', cache key: 'os:android:errId'.
+ *   Model Identifier Format: 'os-android-{timestamp}'.
+ *   Variations and Use Cases: Versions like 14; mobile app errors.
+ *   Example Usage: Android device errors in DndCoLab mobile.
+ *
+ * - 'iOS': Apple iOS.
+ *   Classifications: Mobile OS.
+ *   Identifiers: lowercase: 'ios', camelCase: 'iosOs', snake_case: 'ios_os', ALL_CAP: 'IOS', cache key: 'os:ios:errId'.
+ *   Model Identifier Format: 'os-ios-{timestamp}'.
+ *   Variations and Use Cases: Versions like 17; iPhone/iPad errors.
+ *   Example Usage: iOS UA detection in error logs.
+ *
+ * - 'Ubuntu': Ubuntu Linux distribution.
+ *   Classifications: Debian-based Linux.
+ *   Identifiers: lowercase: 'ubuntu', camelCase: 'ubuntuOs', snake_case: 'ubuntu_os', ALL_CAP: 'UBUNTU', cache key: 'os:ubuntu:errId'.
+ *   Model Identifier Format: 'os-ubuntu-{timestamp}'.
+ *   Variations and Use Cases: Server/desktop; errors in Linux variants.
+ *   Example Usage: Ubuntu-specific errors in server runtime.
+ *
+ * - 'Fedora': Fedora Linux distribution.
+ *   Classifications: RPM-based Linux.
+ *   Identifiers: lowercase: 'fedora', camelCase: 'fedoraOs', snake_case: 'fedora_os', ALL_CAP: 'FEDORA', cache key: 'os:fedora:errId'.
+ *   Model Identifier Format: 'os-fedora-{timestamp}'.
+ *   Variations and Use Cases: Community-driven; errors in package management.
+ *   Example Usage: Fedora UA errors in development envs.
+ *
+ * - 'Chrome OS': Google Chrome OS.
+ *   Classifications: Linux-based for Chromebooks.
+ *   Identifiers: lowercase: 'chrome os', camelCase: 'chromeOs', snake_case: 'chrome_os', ALL_CAP: 'CHROME_OS', cache key: 'os:chrome os:errId'.
+ *   Model Identifier Format: 'os-chrome-os-{timestamp}'.
+ *   Variations and Use Cases: Web-centric; errors in web app compatibility.
+ *   Example Usage: Chrome OS device errors in DomsError.ts.
+ */
+export type OsNameTaxonomy = CoreOsName | CustomOsName;
+export type CoreOsName = 'windows' | 'macos' | 'linux' | 'ios' | 'android' | 'ubuntu' | 'fedora' | 'chrome';
+export type CustomOsName = string & { __osName?: 'CustomOsName' };
+
+/**
+ * Union type representing DeploymentEnvironmentTaxonomy in the DOMSpec ecosystem.
+ * Defines deployment models for error context in @dndhub/error and broader DndHub applications.
+ * Supports classification of runtime deployments beyond CI environments, aiding in multi-setup error tracking.
+ *
+ * - 'localhost': Local machine deployment.
+ *   Classifications: Development standards.
+ *   Identifiers: lowercase: 'localhost', camelCase: 'localhostDeployment', snake_case: 'localhost_deployment', ALL_CAP: 'LOCALHOST', cache key: 'deploy:localhost:errId'.
+ *   Model Identifier Format: 'deploy-localhost-{timestamp}'.
+ *   Variations and Use Cases: Used for local servers (e.g., http://localhost:3000); common in dev/testing with no external access.
+ *   Example Usage: Localhost errors in DomsClientError.tsx during development.
+ *
+ * - 'cloud': Cloud-based deployment.
+ *   Classifications: AWS/Azure/GCP standards.
+ *   Identifiers: lowercase: 'cloud', camelCase: 'cloudDeployment', snake_case: 'cloud_deployment', ALL_CAP: 'CLOUD', cache key: 'deploy:cloud:errId'.
+ *   Model Identifier Format: 'deploy-cloud-{timestamp}'.
+ *   Variations and Use Cases: Scalable hosting (e.g., Vercel); errors in cloud scaling or APIs.
+ *   Example Usage: Cloud errors in fluxr integrations with Supabase.
+ *
+ * - 'onpremise': On-premise server deployment.
+ *   Classifications: Self-hosted standards.
+ *   Identifiers: lowercase: 'onpremise', camelCase: 'onpremiseDeployment', snake_case: 'onpremise_deployment', ALL_CAP: 'ONPREMISE', cache key: 'deploy:onpremise:errId'.
+ *   Model Identifier Format: 'deploy-onpremise-{timestamp}'.
+ *   Variations and Use Cases: Internal data centers; errors in hardware/network configs.
+ *   Example Usage: On-premise errors in enterprise DndHub setups.
+ *
+ * - 'container': Containerized deployment.
+ *   Classifications: Docker/Kubernetes standards.
+ *   Identifiers: lowercase: 'container', camelCase: 'containerDeployment', snake_case: 'container_deployment', ALL_CAP: 'CONTAINER', cache key: 'deploy:container:errId'.
+ *   Model Identifier Format: 'deploy-container-{timestamp}'.
+ *   Variations and Use Cases: Docker images/orchestration; errors in container orchestration.
+ *   Example Usage: Container errors in Kubernetes clusters via DomsError.ts.
+ *
+ * - 'hybrid': Hybrid cloud/on-premise deployment.
+ *   Classifications: Mixed infrastructure standards.
+ *   Identifiers: lowercase: 'hybrid', camelCase: 'hybridDeployment', snake_case: 'hybrid_deployment', ALL_CAP: 'HYBRID', cache key: 'deploy:hybrid:errId'.
+ *   Model Identifier Format: 'deploy-hybrid-{timestamp}'.
+ *   Variations and Use Cases: Combined setups for flexibility; errors in sync between environments.
+ *   Example Usage: Hybrid errors in DndCoLab data syncing.
+ *
+ * - 'serverless': Serverless function deployment.
+ *   Classifications: AWS Lambda/Vercel Functions standards.
+ *   Identifiers: lowercase: 'serverless', camelCase: 'serverlessDeployment', snake_case: 'serverless_deployment', ALL_CAP: 'SERVERLESS', cache key: 'deploy:serverless:errId'.
+ *   Model Identifier Format: 'deploy-serverless-{timestamp}'.
+ *   Variations and Use Cases: Event-driven; errors in cold starts or scaling.
+ *   Example Usage: Serverless errors in Vercel functions.
+ *
+ * - 'edge': Edge computing deployment.
+ *   Classifications: CDN/Cloudflare standards.
+ *   Identifiers: lowercase: 'edge', camelCase: 'edgeDeployment', snake_case: 'edge_deployment', ALL_CAP: 'EDGE', cache key: 'deploy:edge:errId'.
+ *   Model Identifier Format: 'deploy-edge-{timestamp}'.
+ *   Variations and Use Cases: Low-latency; errors in global distribution.
+ *   Example Usage: Edge errors in Cloudflare Workers.
+ *
+ * - 'virtual-machine': Virtual machine deployment.
+ *   Classifications: VMWare/EC2 standards.
+ *   Identifiers: lowercase: 'virtual-machine', camelCase: 'vmDeployment', snake_case: 'vm_deployment', ALL_CAP: 'VIRTUAL_MACHINE', cache key: 'deploy:virtual-machine:errId'.
+ *   Model Identifier Format: 'deploy-vm-{timestamp}'.
+ *   Variations and Use Cases: Isolated VMs; errors in virtualization layers.
+ *   Example Usage: VM errors in AWS EC2 instances.
+ *
+ * - 'bare-metal': Bare-metal hardware deployment.
+ *   Classifications: Direct hardware standards.
+ *   Identifiers: lowercase: 'bare-metal', camelCase: 'bareMetalDeployment', snake_case: 'bare_metal_deployment', ALL_CAP: 'BARE_METAL', cache key: 'deploy:bare-metal:errId'.
+ *   Model Identifier Format: 'deploy-bare-metal-{timestamp}'.
+ *   Variations and Use Cases: High-performance; errors in hardware faults.
+ *   Example Usage: Bare-metal errors in on-premise servers.
+ *
+ * - 'paas': Platform as a Service deployment.
+ *   Classifications: Heroku/Vercel standards.
+ *   Identifiers: lowercase: 'paas', camelCase: 'paasDeployment', snake_case: 'paas_deployment', ALL_CAP: 'PAAS', cache key: 'deploy:paas:errId'.
+ *   Model Identifier Format: 'deploy-paas-{timestamp}'.
+ *   Variations and Use Cases: Managed platforms; errors in auto-scaling.
+ *   Example Usage: PaaS errors in Vercel deployments.
+ *
+ * - 'iaas': Infrastructure as a Service deployment.
+ *   Classifications: AWS/Azure standards.
+ *   Identifiers: lowercase: 'iaas', camelCase: 'iaasDeployment', snake_case: 'iaas_deployment', ALL_CAP: 'IAAS', cache key: 'deploy:iaas:errId'.
+ *   Model Identifier Format: 'deploy-iaas-{timestamp}'.
+ *   Variations and Use Cases: Virtualized infra; errors in provisioning.
+ *   Example Usage: IaaS errors in cloud VM management.
+ */
+export type DeploymentEnvironmentTaxonomy = CoreDeploymentEnvironment | CustomDeploymentEnvironment;
+export type CoreDeploymentEnvironment = 'localhost' | 'cloud' | 'onpremise' | 'container' | 'hybrid' | 'serverless' | 'edge' | 'virtual-machine' | 'bare-metal' | 'paas' | 'iaas';
+export type CustomDeploymentEnvironment = string & { __deploymentEnvironment?: 'CustomDeploymentEnvironment' };
+
+/**
+ * Union type representing DeploymentInstanceTaxonomy in the DOMSpec ecosystem.
+ * Defines instance roles for FluxrKey generation and error tracking in @dndhub/error.
+ * Supports deployment-specific instances like primaries/replicas for distributed systems tracking.
+ *
+ * - 'primary': Primary instance for core operations.
+ *   Classifications: Master-primary replication.
+ *   Identifiers: lowercase: 'primary', camelCase: 'primaryInstance', snake_case: 'primary_instance', ALL_CAP: 'PRIMARY', cache key: 'instance:primary:errId'.
+ *   Model Identifier Format: 'instance-primary-{timestamp}'.
+ *   Variations and Use Cases: Main DB/write node; errors in high-availability failovers.
+ *   Example Usage: Primary instance errors in Supabase via DomsError.ts.
+ *
+ * - 'replica': Replica instance for read scaling.
+ *   Classifications: Read replicas.
+ *   Identifiers: lowercase: 'replica', camelCase: 'replicaInstance', snake_case: 'replica_instance', ALL_CAP: 'REPLICA', cache key: 'instance:replica:errId'.
+ *   Model Identifier Format: 'instance-replica-{timestamp}'.
+ *   Variations and Use Cases: Data copies; errors in replication lags/sync.
+ *   Example Usage: Replica errors in Vercel KV reads.
+ *
+ * - 'master': Master instance in legacy setups.
+ *   Classifications: Master-slave model (deprecated terminology).
+ *   Identifiers: lowercase: 'master', camelCase: 'masterInstance', snake_case: 'master_instance', ALL_CAP: 'MASTER', cache key: 'instance:master:errId'.
+ *   Model Identifier Format: 'instance-master-{timestamp}'.
+ *   Variations and Use Cases: Controls slaves; errors in chain replication.
+ *   Example Usage: Master errors in fluxr legacy DBs.
+ *
+ * - 'slave': Slave instance in legacy setups.
+ *   Classifications: Master-slave model (prefer 'replica').
+ *   Identifiers: lowercase: 'slave', camelCase: 'slaveInstance', snake_case: 'slave_instance', ALL_CAP: 'SLAVE', cache key: 'instance:slave:errId'.
+ *   Model Identifier Format: 'instance-slave-{timestamp}'.
+ *   Variations and Use Cases: Follows master; errors in data consistency.
+ *   Example Usage: Slave sync errors in older systems.
+ *
+ * - 'follower': Follower instance in consensus models.
+ *   Classifications: Raft/Paxos protocols.
+ *   Identifiers: lowercase: 'follower', camelCase: 'followerInstance', snake_case: 'follower_instance', ALL_CAP: 'FOLLOWER', cache key: 'instance:follower:errId'.
+ *   Model Identifier Format: 'instance-follower-{timestamp}'.
+ *   Variations and Use Cases: Replicates leader; errors in elections.
+ *   Example Usage: Follower errors in distributed DndHub services.
+ *
+ * - 'secondary': Secondary instance for failover.
+ *   Classifications: High availability.
+ *   Identifiers: lowercase: 'secondary', camelCase: 'secondaryInstance', snake_case: 'secondary_instance', ALL_CAP: 'SECONDARY', cache key: 'instance:secondary:errId'.
+ *   Model Identifier Format: 'instance-secondary-{timestamp}'.
+ *   Variations and Use Cases: Hot standby; errors in promotion.
+ *   Example Usage: Secondary errors in cloud HA.
+ *
+ * - 'worker': Worker instance for tasks.
+ *   Classifications: Worker queues.
+ *   Identifiers: lowercase: 'worker', camelCase: 'workerInstance', snake_case: 'worker_instance', ALL_CAP: 'WORKER', cache key: 'instance:worker:errId'.
+ *   Model Identifier Format: 'instance-worker-{timestamp}'.
+ *   Variations and Use Cases: Background jobs; errors in processing.
+ *   Example Usage: Worker errors in fluxr queues.
+ *
+ * - 'node': Node instance in clusters.
+ *   Classifications: Cluster nodes.
+ *   Identifiers: lowercase: 'node', camelCase: 'nodeInstance', snake_case: 'node_instance', ALL_CAP: 'NODE', cache key: 'instance:node:errId'.
+ *   Model Identifier Format: 'instance-node-{timestamp}'.
+ *   Variations and Use Cases: Kubernetes nodes; errors in health checks.
+ *   Example Usage: Node errors in container deployments.
+ *
+ * - 'main': Main instance in monoliths.
+ *   Classifications: Single-node.
+ *   Identifiers: lowercase: 'main', camelCase: 'mainInstance', snake_case: 'main_instance', ALL_CAP: 'MAIN', cache key: 'instance:main:errId'.
+ *   Model Identifier Format: 'instance-main-{timestamp}'.
+ *   Variations and Use Cases: Central ops; errors in core functions.
+ *   Example Usage: Main errors in local dev.
+ *
+ * - 'backup': Backup instance for recovery.
+ *   Classifications: Disaster recovery.
+ *   Identifiers: lowercase: 'backup', camelCase: 'backupInstance', snake_case: 'backup_instance', ALL_CAP: 'BACKUP', cache key: 'instance:backup:errId'.
+ *   Model Identifier Format: 'instance-backup-{timestamp}'.
+ *   Variations and Use Cases: Data backups; errors in restores.
+ *   Example Usage: Backup errors in Vercel KV.
+ *
+ * - 'cluster': Cluster manager instance.
+ *   Classifications: Orchestration.
+ *   Identifiers: lowercase: 'cluster', camelCase: 'clusterInstance', snake_case: 'cluster_instance', ALL_CAP: 'CLUSTER', cache key: 'instance:cluster:errId'.
+ *   Model Identifier Format: 'instance-cluster-{timestamp}'.
+ *   Variations and Use Cases: Oversees nodes; errors in quorum.
+ *   Example Usage: Cluster errors in Kubernetes.
+ *
+ * - 'read': Read instance for queries.
+ *   Classifications: Read scaling.
+ *   Identifiers: lowercase: 'read', camelCase: 'readInstance', snake_case: 'read_instance', ALL_CAP: 'READ', cache key: 'instance:read:errId'.
+ *   Model Identifier Format: 'instance-read-{timestamp}'.
+ *   Variations and Use Cases: Query optimization; errors in reads.
+ *   Example Usage: Read errors in DB fluxr.
+ *
+ * - 'write': Write instance for updates.
+ *   Classifications: Write scaling.
+ *   Identifiers: lowercase: 'write', camelCase: 'writeInstance', snake_case: 'write_instance', ALL_CAP: 'WRITE', cache key: 'instance:write:errId'.
+ *   Model Identifier Format: 'instance-write-{timestamp}'.
+ *   Variations and Use Cases: Insert/update handling; errors in writes.
+ *   Example Usage: Write errors in Supabase.
+ *
+ * - 'archive': Archive instance for storage.
+ *   Classifications: Archiving.
+ *   Identifiers: lowercase: 'archive', camelCase: 'archiveInstance', snake_case: 'archive_instance', ALL_CAP: 'ARCHIVE', cache key: 'instance:archive:errId'.
+ *   Model Identifier Format: 'instance-archive-{timestamp}'.
+ *   Variations and Use Cases: Historical data; errors in retrieval.
+ *   Example Usage: Archive errors in cold storage.
+ *
+ * - 'analytics': Analytics instance for reporting.
+ *   Classifications: BI tools.
+ *   Identifiers: lowercase: 'analytics', camelCase: 'analyticsInstance', snake_case: 'analytics_instance', ALL_CAP: 'ANALYTICS', cache key: 'instance:analytics:errId'.
+ *   Model Identifier Format: 'instance-analytics-{timestamp}'.
+ *   Variations and Use Cases: Query-heavy; errors in reports.
+ *   Example Usage: Analytics errors in DndCoLab.
+ *
+ * - 'metadata': Metadata instance for configs.
+ *   Classifications: Config management.
+ *   Identifiers: lowercase: 'metadata', camelCase: 'metadataInstance', snake_case: 'metadata_instance', ALL_CAP: 'METADATA', cache key: 'instance:metadata:errId'.
+ *   Model Identifier Format: 'instance-metadata-{timestamp}'.
+ *   Variations and Use Cases: Schema storage; errors in access.
+ *   Example Usage: Metadata errors in Vercel KV.
+ *
+ * - 'leader': Leader instance in consensus.
+ *   Classifications: Raft leader.
+ *   Identifiers: lowercase: 'leader', camelCase: 'leaderInstance', snake_case: 'leader_instance', ALL_CAP: 'LEADER', cache key: 'instance:leader:errId'.
+ *   Model Identifier Format: 'instance-leader-{timestamp}'.
+ *   Variations and Use Cases: Elected leader; errors in consensus.
+ *   Example Usage: Leader errors in distributed systems.
+ *
+ * - 'standby': Standby instance for failover.
+ *   Classifications: HA standby.
+ *   Identifiers: lowercase: 'standby', camelCase: 'standbyInstance', snake_case: 'standby_instance', ALL_CAP: 'STANDBY', cache key: 'instance:standby:errId'.
+ *   Model Identifier Format: 'instance-standby-{timestamp}'.
+ *   Variations and Use Cases: Idle until promotion; errors in readiness.
+ *   Example Usage: Standby errors in cloud HA.
+ *
+ * - 'proxy': Proxy instance for routing.
+ *   Classifications: Load balancing.
+ *   Identifiers: lowercase: 'proxy', camelCase: 'proxyInstance', snake_case: 'proxy_instance', ALL_CAP: 'PROXY', cache key: 'instance:proxy:errId'.
+ *   Model Identifier Format: 'instance-proxy-{timestamp}'.
+ *   Variations and Use Cases: Traffic routing; errors in proxies.
+ *   Example Usage: Proxy errors in NGINX setups.
+ *
+ * - 'load-balancer': Load balancer instance.
+ *   Classifications: Scaling standards.
+ *   Identifiers: lowercase: 'load-balancer', camelCase: 'loadBalancerInstance', snake_case: 'load_balancer_instance', ALL_CAP: 'LOAD_BALANCER', cache key: 'instance:load-balancer:errId'.
+ *   Model Identifier Format: 'instance-load-balancer-{timestamp}'.
+ *   Variations and Use Cases: Distributes load; errors in balancing.
+ *   Example Usage: Load balancer errors in AWS ELB.
+ *
+ * - 'cache': Cache instance for data.
+ *   Classifications: Caching layers.
+ *   Identifiers: lowercase: 'cache', camelCase: 'cacheInstance', snake_case: 'cache_instance', ALL_CAP: 'CACHE', cache key: 'instance:cache:errId'.
+ *   Model Identifier Format: 'instance-cache-{timestamp}'.
+ *   Variations and Use Cases: Redis/memcache; errors in hits/misses.
+ *   Example Usage: Cache errors in fluxr caching.
+ */
+type DeploymentInstanceTaxonomy = CoreDeploymentInstance | CustomDeploymentInstance;
+type CoreDeploymentInstance = 'primary' | 'replica' | 'master' | 'slave' | 'follower' | 'secondary' | 'worker' | 'node' | 'main' | 'backup' | 'cluster' | 'read' | 'write' | 'archive' | 'analytics' | 'metadata' | 'leader' | 'standby' | 'proxy' | 'load-balancer' | 'cache';
+type CustomDeploymentInstance = string & { __deploymentInstance?: 'CustomDeploymentInstance' };
+
+/**
+ * Union type representing DataResidencyTaxonomy in the DOMSpec ecosystem.
+ * Defines data residency regions for error context in @dndhub/error, ensuring compliance with regional data protection laws.
+ * Supports premium enterprise features for data sovereignty (e.g., GDPR for EU) and storage in region-specific Supabase/PostgreSQL instances.
+ *
+ * - 'us': United States data residency.
+ *   Classifications: US data protection laws (e.g., CCPA).
+ *   Identifiers: lowercase: 'us', camelCase: 'usResidency', snake_case: 'us_residency', ALL_CAP: 'US', cache key: 'residency:us:errId'.
+ *   Model Identifier Format: 'residency-us-{timestamp}'.
+ *   Variations and Use Cases: Used for errors stored in US-based servers; complies with CCPA requirements.
+ *   Example Usage: Errors logged in us-east-1 Supabase instance for DndCoLab US users.
+ *
+ * - 'eu': European Union data residency.
+ *   Classifications: GDPR compliance.
+ *   Identifiers: lowercase: 'eu', camelCase: 'euResidency', snake_case: 'eu_residency', ALL_CAP: 'EU', cache key: 'residency:eu:errId'.
+ *   Model Identifier Format: 'residency-eu-{timestamp}'.
+ *   Variations and Use Cases: Used for EU-based error storage; enforces strict data protection via @dndhub/security RLS.
+ *   Example Usage: GDPR-compliant errors in eu-central-1 Supabase instance.
+ *
+ * - 'ap': Asia-Pacific data residency.
+ *   Classifications: APAC data protection (e.g., Singapore PDPA).
+ *   Identifiers: lowercase: 'ap', camelCase: 'apResidency', snake_case: 'ap_residency', ALL_CAP: 'AP', cache key: 'residency:ap:errId'.
+ *   Model Identifier Format: 'residency-ap-{timestamp}'.
+ *   Variations and Use Cases: Used for APAC region errors; supports Singapore/Japan data laws.
+ *   Example Usage: Errors logged in ap-southeast-1 Supabase instance for fluxr integrations.
+ *
+ * - 'au': Australia data residency.
+ *   Classifications: Australian Privacy Act.
+ *   Identifiers: lowercase: 'au', camelCase: 'auResidency', snake_case: 'au_residency', ALL_CAP: 'AU', cache key: 'residency:au:errId'.
+ *   Model Identifier Format: 'residency-au-{timestamp}'.
+ *   Variations and Use Cases: Used for Australia-specific error storage; complies with local privacy laws.
+ *   Example Usage: Errors in au-sydney Supabase instance for DndHub deployments.
+ *
+ * - 'sa': South America data residency.
+ *   Classifications: LGPD (Brazil General Data Protection Law).
+ *   Identifiers: lowercase: 'sa', camelCase: 'saResidency', snake_case: 'sa_residency', ALL_CAP: 'SA', cache key: 'residency:sa:errId'.
+ *   Model Identifier Format: 'residency-sa-{timestamp}'.
+ *   Variations and Use Cases: Used for South America error storage; supports Brazil LGPD compliance.
+ *   Example Usage: Errors in sa-east-1 Supabase instance for regional fluxr services.
+ *
+ * - 'af': Africa data residency.
+ *   Classifications: POPIA (South Africa Protection of Personal Information Act).
+ *   Identifiers: lowercase: 'af', camelCase: 'afResidency', snake_case: 'af_residency', ALL_CAP: 'AF', cache key: 'residency:af:errId'.
+ *   Model Identifier Format: 'residency-af-{timestamp}'.
+ *   Variations and Use Cases: Used for Africa-based error storage; complies with POPIA.
+ *   Example Usage: Errors in af-south-1 Supabase instance for DndHub community apps.
+ *
+ * - 'global': Global (non-region-specific) data residency.
+ *   Classifications: Non-specific, fallback for unrestricted data.
+ *   Identifiers: lowercase: 'global', camelCase: 'globalResidency', snake_case: 'global_residency', ALL_CAP: 'GLOBAL', cache key: 'residency:global:errId'.
+ *   Model Identifier Format: 'residency-global-{timestamp}'.
+ *   Variations and Use Cases: Used for errors not tied to specific regions; suitable for non-sensitive data or global analytics.
+ *   Example Usage: Global error aggregation in Vercel KV for analytics dashboards.
+ */
+export type DataResidencyTaxonomy = CoreDataResidency | CustomDataResidency;
+export type CoreDataResidency = 'us' | 'eu' | 'ap' | 'au' | 'sa' | 'af' | 'global';
+export type CustomDataResidency = string & { __dataResidency?: 'CustomDataResidency' };

@@ -1,0 +1,34 @@
+export type { 
+    FluxrTechTaxonomy, CoreFluxrTech, CustomFluxrTech,
+    StorageTechTaxonomy, DatabaseTechTaxonomy, MessagingTechTaxonomy, 
+    NetworkTechTaxonomy, DevToolTechTaxonomy, AITechTaxonomy, 
+    CommerceTechTaxonomy, CommTechTaxonomy, SearchAnalyticsTechTaxonomy, 
+    SecurityTechTaxonomy, AppTechTaxonomy, MediaTechTaxonomy, 
+    SpecializedTechTaxonomy, BackupTechTaxonomy, ConfigTechTaxonomy, 
+    WorkflowTechTaxonomy
+} from './fluxr-tech.d.ts';
+export type { 
+    FluxrProviderTaxonomy, CoreFluxrProvider, CustomFluxrProvider,
+    MainProviderTaxonomy, CloudProviderTaxonomy, DataProviderTaxonomy, 
+    WarehouseProviderTaxonomy, VersionControlProviderTaxonomy, 
+    EmailProviderTaxonomy, ServiceProviderTaxonomy, AuthProviderTaxonomy, 
+    AIProviderTaxonomy, MarketingProviderTaxonomy, MonitoringProviderTaxonomy, 
+    SearchProviderTaxonomy, CDNProviderTaxonomy, CacheProviderTaxonomy
+} from './fluxr-provider.d.ts';
+export type { 
+    FluxrTechDriverTaxonomy, CoreFluxrTechDriver, CustomFluxrTechDriver,
+    BrowserDriverTaxonomy, SQLDriverTaxonomy, NoSQLDriverTaxonomy, 
+    GraphDriverTaxonomy, TimeseriesDriverTaxonomy, WarehouseDriverTaxonomy, 
+    FilesystemDriverTaxonomy, ObjectStorageDriverTaxonomy, MemoryDriverTaxonomy, 
+    DiskDriverTaxonomy, StorageDriverTaxonomy, MQDriverTaxonomy, 
+    GitDriverTaxonomy, AIDriverTaxonomy, EmailDriverTaxonomy, 
+    PaymentDriverTaxonomy, ServiceDriverTaxonomy, SearchDriverTaxonomy, 
+    MonitoringDriverTaxonomy, NotificationDriverTaxonomy, ServerlessDriverTaxonomy, 
+    ContainerDriverTaxonomy, AuthDriverTaxonomy, CryptoWalletDriverTaxonomy, 
+    DataProcessingDriverTaxonomy, BackupDriverTaxonomy, ConfigDriverTaxonomy, 
+    WorkflowDriverTaxonomy, AppTechDriverTaxonomy, NetworkDriverTaxonomy, 
+    SearchAnalyticsDriverTaxonomy, IOTDriverTaxonomy, ScriptDriverTaxonomy
+} from './tech-driver.d.ts';
+export type { 
+    FluxrDriverTypeTaxonomy, CoreFluxrDriverType, CustomFluxrDriverType
+} from './tech-driver-type.d.ts';
