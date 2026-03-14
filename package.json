@@ -1,0 +1,100 @@
+{
+  "name": "@dndhub/domspec",
+  "version": "0.0.0-alpha",
+  "description": "Document Object Model Specifications - An open-source initiative by DNDHUBS LIMITED for standardizing DOM APIs and web development taxonomy.",
+  "keywords": [
+    "domspec"
+  ],
+  "homepage": "https://dndhubs.com/docs/domspec",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/dndhub/domspec.git"
+  },
+  "bugs": {
+    "url": "https://github.com/dndhub/domspec/issues"
+  },
+  "author": "DNDHUBS LIMITED <jetroolowole@gmail.com> (https://dndhubs.com)",
+  "license": "MIT",
+  "files": [
+    "dist",
+    "LICENSE",
+    "README.md",
+    "PUBLIC_API.md",
+    "SECURITY.md",
+    "CODE_OF_CONDUCT.md",
+    "CONTRIBUTING.md",
+    "FUNDING.md"
+  ],
+  "type": "module",
+  "types": "dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts"
+    }
+  },
+  "scripts": {
+    "build": "tsc && vite build",
+    "clean": "rimraf dist",
+    "typecheck": "tsc -p tsconfig.json --noEmit",
+    "lint": "eslint ."
+  },
+  "devDependencies": {
+    "@dndhub/config": "workspace:*",
+    "@dndhub/taxonomy": "workspace:*",
+    "@types/node": "^25.3.3",
+    "@vitejs/plugin-react": "^5.1.4",
+    "rimraf": "^6.0.1",
+    "typescript": "^5.9.3",
+    "vite": "^7.3.1",
+    "vite-plugin-dts": "^4.5.4"
+  },
+  "nx": {
+    "tags": [
+      "layer:L0",
+      "kind:lib",
+      "lang:dts",
+      "dist:public",
+      "license:mit"
+    ],
+    "targets": {
+      "build": {
+        "executor": "nx:run-commands",
+        "outputs": [
+          "{projectRoot}/dist"
+        ],
+        "options": {
+          "cwd": "{projectRoot}",
+          "command": "yarn build"
+        }
+      },
+      "typecheck": {
+        "executor": "nx:run-commands",
+        "options": {
+          "cwd": "{projectRoot}",
+          "command": "yarn typecheck"
+        }
+      },
+      "lint": {
+        "executor": "nx:run-commands",
+        "options": {
+          "cwd": "{projectRoot}",
+          "command": "yarn lint"
+        }
+      },
+      "validate": {
+        "executor": "nx:run-commands",
+        "options": {
+          "cwd": "{projectRoot}",
+          "command": "yarn validate"
+        }
+      }
+    }
+  },
+  "engines": {
+    "node": ">=23.0.0"
+  },
+  "publishConfig": {
+    "access": "public",
+    "registry": "https://registry.npmjs.org/"
+  }
+}
